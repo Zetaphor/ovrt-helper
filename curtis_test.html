@@ -1,0 +1,86 @@
+<html>
+<title>OVR Toolkit Custom Apps demonstration</title>
+	<body>
+		<h2>OVR Toolkit Custom Apps demonstration</h2>
+		<button onclick="testSpawn()">Spawn overlay</button>
+		<p>Overlay ID:</p>
+		<p id="uid">N/A</p>
+		<button onclick="setToWebpage()">Set to web page</button>
+		<button onclick="setToTwitch()">Set to Twitch chat</button>
+		<button onclick="closeOverlay()">Close overlay</button>
+		<button onclick="setPosition()">Set position to 0,0,0</button>
+		<script>
+			var overlayTransform = {
+				"posX": 0,
+				"posY": 0,
+				"posZ": 0,
+				"rotX": 0,
+				"rotY": 0,
+				"rotZ": 0,
+				"size": 0.25,
+				"opacity": 1,
+				"curvature": 0,
+				"framerate": 60,
+				"ecoMode": true,
+				"lookHiding": false,
+				"attachedDevice": 0,
+				"shouldSave": true
+			};
+
+			var webContents = {
+				"url": "http://voxelloop.co.uk/",
+				"width": 400,
+				"height": 600
+			};
+
+			var webContentsTwitch = {
+				"url": "http://vl1.voxelloop.co.uk/ovrt/demoapp/twitch/Twitch.html",
+				"width": 400,
+				"height": 600
+			};
+
+			// Call function to spawn overlay.
+			function testSpawn() {
+				SpawnOverlay(JSON.stringify(overlayTransform), "overlaySpawned");
+			}
+
+			// Callback from spawn overlay containing the overlay's UID.
+			function overlaySpawned(uid) {
+				document.getElementById("uid").innerHTML = uid;
+			}
+
+			// Set overlay to a webpage.
+			function setToWebpage() {
+				if (document.getElementById("uid").innerHTML == "N/A") {
+					return;
+				}
+				SetContents(document.getElementById("uid").innerHTML, 0, JSON.stringify(webContents));
+			}
+
+			// Set overlay to Twitch chat.
+			function setToTwitch() {
+				if (document.getElementById("uid").innerHTML == "N/A") {
+					return;
+				}
+				SetContents(document.getElementById("uid").innerHTML, 0, JSON.stringify(webContentsTwitch));
+			}
+
+			// Close the overlay.
+			function closeOverlay() {
+				if (document.getElementById("uid").innerHTML == "N/A") {
+					return;
+				}
+				CloseOverlay(document.getElementById("uid").innerHTML);
+				document.getElementById("uid").innerHTML = "N/A";
+			}
+
+			// Set overlay position to 0, 0, 0.
+			function setPosition() {
+				if (document.getElementById("uid").innerHTML == "N/A") {
+					return;
+				}
+				SetOverlayPosition(document.getElementById("uid").innerHTML, 0, 0, 0);
+			}
+		</script>
+	</body>
+</html>

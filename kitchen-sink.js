@@ -1,7 +1,8 @@
 // function DevicePositionUpdate (deviceInfo) { window.ovrt.devicePositionUpdate(deviceInfo) }
 // function ReceiveMessage (message) { window.ovrt.receiveMessage(message) }
 // function InteractionStateChanged (isInteracting) { window.ovrt.InteractionStateChanged(isInteracting) }
-function ovrtWindowSpawned (uid) { window.ovrt.setupWindow(uid) }
+function ovrtWinSpawned (uid) { window.ovrt.completeWinSpawn(uid) }
+function ovrtWinDetailed (details) { window.ovrt.completeWinDetails(details) }
 function ovrtWindowTitles (uid) { window.ovrt.updateWindowTitles(uid) }
 let titleTimeout = setInterval(ovrtWindowTitles, 5000)
 
@@ -45,8 +46,9 @@ window.ovrt = {
     shouldSave: false
   },
 
-  windowTitles: {},
-  windowQueue: [],
+  winTitles: {},
+  spawnQueue: [],
+  detailsQueue: [],
 
   /**
    * Broadcast a message to all open browser instances
@@ -88,32 +90,20 @@ window.ovrt = {
     else console.log('Received message:', message)
   },
 
-  updateWindowTitles: function (windowTitles) {
-    console.log('WindowTitles:', windowTitles)
-    this.windowTitles = windowTitles
+  updateWinTitles: function (windowTitles) {
+    console.log('WindowTitles:', winTitles)
+    this.winTitles = winTitles
   },
 
   /**
-   * Process a window uid returned from SpawnOverlay
-   * @param { Number } uid
-   */
-  setupWindow: function (uid) {
-    let windowData = this.windowQueue.shift()
-    window.SetContents(uid, windowData.type, windowData.contents)
-    windowData.uid = uid
-    if (windowData.broadcast) this.broadcast('windowCreated', windowData)
-    if (typeof windowData.callback === 'function') windowData['callback'](windowData)
-  },
-
-  /**
-   * Add a new window to the spawn queue
+   * Add a request for a window spawn to the queue
    * @param { Number } type
    * @param { * } contents
    * @param { Function } callback
    * @param { Boolean } broadcast
    * @param { Object } transform
    */
-  queueWindowSpawn: function (type, contents, callback, broadcast, transform) {
+  requestWinSpawn: function (type, contents, callback, broadcast, transform) {
     if (typeof shouldSave === 'undefined') shouldSave = false
     if (typeof broadcast === 'undefined') broadcast = true
     if (typeof transform === 'undefined') transform = this.newTransform
@@ -124,7 +114,44 @@ window.ovrt = {
       broadcast: broadcast,
       transform: transform
     })
-    SpawnOverlay(JSON.stringify(transform), 'ovrtWindowSpawned')
+    SpawnOverlay(JSON.stringify(transform), 'ovrtWinSpawned')
+  },
+
+  /**
+   * Process a window uid returned from SpawnOverlay
+   * @param { Number } uid
+   */
+  completeWinSpawn: function (uid) {
+    let winData = this.spawnQueue.shift()
+    window.SetContents(uid, winData.type, winData.contents)
+    windowData.uid = uid
+    if (winData.broadcast) this.broadcast('winCreated', winData)
+    if (typeof winData.callback === 'function') winData['callback'](winData)
+  },
+
+  /**
+   * Add a request for a windows details to the queue
+   * @param { Number } uid
+   * @param { String } callback
+   * @param { Number } targetId
+   */
+  requestWinDetails: function (uid, callback, targetId) {
+    this.detailsQueue.push({
+      uid: uid,
+      callback: callback,
+      targetId: targetId
+    })
+    window.GetOverlayTransform(uid, 'ovrtWinDetailed')
+  },
+
+  /**
+   * Process a windows details returned from GetOverlayTransform
+   * @param { Object } winTransform
+   */
+  completeWinDetails: function (winTransform) {
+    let winData = this.detailsQueue.shift()
+    this.winData.transform = details
+    if (typeof winData.callback === 'function') winData['callback'](winData)
   },
 
   /**
@@ -134,11 +161,11 @@ window.ovrt = {
    * @param { Number } height
    * @param { Function } callback
    */
-  createWebWindow: function (url, width, height, callback) {
+  createWebWin: function (url, width, height, callback) {
     if (typeof width === 'undefined') width = 600
     if (typeof height === 'undefined') height = 600
     let contents = { url: url, width: width, height: height }
-    this.queueWindowSpawn(this.winTypes.web, contents, callback)
+    this.queueWinSpawn(this.winTypes.web, contents, callback)
   },
 
   /**
@@ -146,8 +173,8 @@ window.ovrt = {
    * @param { Number } monitorId
    * @param { Function } callback
    */
-  createDesktopWindow: function (monitorId, callback) {
-    this.queueWindowSpawn(this.winTypes.desktop, monitorId, callback)
+  createDesktopWin: function (monitorId, callback) {
+    this.queueWinSpawn(this.winTypes.desktop, monitorId, callback)
   },
 
   /**
@@ -156,6 +183,53 @@ window.ovrt = {
    * @param { Function } callback
    */
   createWindow: function (windowHandle, callback) {
-    this.queueWindowSpawn(this.winTypes.window, windowHandle, callback)
+    this.queueWinSpawn(this.winTypes.window, windowHandle, callback)
+  },
+
+  /**
+   * Close a window
+   * @param { Number } uid
+   */
+  closeWin: function (uid) {
+    window.CloseOverlay(uid)
+  },
+
+  /**
+   * Refresh a web window
+   * @param { Number } uid
+   */
+  refreshWin: function (uid) {
+    window.Refresh(uid)
+  },
+
+  /**
+   * Get a windows Unity bounds
+   * @param { Number } uid
+   * @param { String } callback
+   */
+  getWinBounds: function (uid, callback) {
+    window.GetOverlayBounds(uid, callback)
+  },
+
+  /**
+   * Set a windows position
+   * @param { Number } uid
+   * @param { Object } pos
+   */
+  setWinPosition: function (uid, pos) {
+    window.SetOverlayPosition(uid, pos.x, pos.y, pos.z)
+  },
+
+  /**
+   * Set a windows rotation
+   * @param { Number } uid
+   * @param { Object } rot
+   */
+  setWinRotation: function (uid, rot) {
+    window.SetOverlayRotation(uid, rot.x, rot.y, rot.z)
+  },
+
+  setDeviceUpdate: function (enable) {
+    window.SendDeviceData(enable)
   }
 }

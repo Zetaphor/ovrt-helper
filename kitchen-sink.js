@@ -3,9 +3,10 @@
 // function InteractionStateChanged (isInteracting) { window.ovrt.InteractionStateChanged(isInteracting) }
 function ovrtWindowSpawned (uid) { window.ovrt.setupWindow(uid) }
 function ovrtWindowTitles (uid) { window.ovrt.updateWindowTitles(uid) }
+let titleTimeout = setInterval(ovrtWindowTitles, 5000)
 
 window.ovrt = {
-  devices: {
+  winDevices: {
     world: 0,
     hmd: 1,
     leftHand: 2,
@@ -18,7 +19,7 @@ window.ovrt = {
     window: 2
   },
 
-  settings: {
+  winSettings: {
     size: 0,
     opacity: 1,
     curvature: 2,
@@ -44,6 +45,7 @@ window.ovrt = {
     shouldSave: false
   },
 
+  windowTitles: {},
   windowQueue: [],
 
   /**
@@ -88,6 +90,7 @@ window.ovrt = {
 
   updateWindowTitles: function (windowTitles) {
     console.log('WindowTitles:', windowTitles)
+    this.windowTitles = windowTitles
   },
 
   /**
@@ -111,6 +114,7 @@ window.ovrt = {
    * @param { Object } transform
    */
   queueWindowSpawn: function (type, contents, callback, broadcast, transform) {
+    if (typeof shouldSave === 'undefined') shouldSave = false
     if (typeof broadcast === 'undefined') broadcast = true
     if (typeof transform === 'undefined') transform = this.newTransform
     this.windowQueue.push({

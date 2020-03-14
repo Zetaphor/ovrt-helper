@@ -3,10 +3,20 @@
 // function InteractionStateChanged (isInteracting) { window.ovrt.InteractionStateChanged(isInteracting) }
 function ovrtWinSpawned (uid) { window.ovrt.completeWinSpawn(uid) }
 function ovrtWinDetailed (details) { window.ovrt.completeWinDetails(details) }
-function ovrtWindowTitles (uid) { window.ovrt.updateWindowTitles(uid) }
-let titleTimeout = setInterval(ovrtWindowTitles, 5000)
+
+GetMonitorCount('ovrtMonitorTotal')
+function ovrtMonitorTotal (total) { window.ovrt.totalMonitors = total }
+
+let titleTimeout = setInterval(requestWindowTitles, 5000)
+function requestWindowTitles () { window.GetWindowTitles('completeWinTitles') }
+function completeWinTitles (titles) { window.ovrt.winTitles = titles}
+
+let fingersTimeout = setInterval(requestFingerCurls, 5000)
+function requestFingerCurls () { window.GetFingerCurls('completeFingerCurls') }
+function completeFingerCurls (curls) { window.ovrt.fingerCurls = curls }
 
 window.ovrt = {
+  /* Constants */
   winDevices: {
     world: 0,
     hmd: 1,
@@ -46,7 +56,13 @@ window.ovrt = {
     shouldSave: false
   },
 
+  totalMonitors: 1,
+  fingerCurls: {},
   winTitles: {},
+
+  updateFingers: false,
+  updateTitles: false,
+
   spawnQueue: [],
   detailsQueue: [],
 
@@ -88,11 +104,6 @@ window.ovrt = {
     let message = JSON.parse(messageStr)
     if (message.broadcast) console.log('Received Broadcast:', message)
     else console.log('Received message:', message)
-  },
-
-  updateWinTitles: function (windowTitles) {
-    console.log('WindowTitles:', winTitles)
-    this.winTitles = winTitles
   },
 
   /**
@@ -229,7 +240,51 @@ window.ovrt = {
     window.SetOverlayRotation(uid, rot.x, rot.y, rot.z)
   },
 
-  setDeviceUpdate: function (enable) {
+  /**
+   * Set whether or not the DevicePositionUpdate function is called on controller/HMD movement
+   * @param { Boolean } enable
+   */
+  setDeviceUpdateFlag: function (enable) {
     window.SendDeviceData(enable)
+  },
+
+  /**
+   * Set whether or not the Knuckles finger values are regularly updated
+   * @param { Boolean } enable
+   */
+  setFingerUpdateFlag: function (enable) {
+    this.updateFingers = enable
+    if (this.updateFingers && !window.fingersTimeout) {
+      setInterval(window.requestFingerCurls, 5000)
+    } else if (!this.updateFingers) clearInterval(window.fingersTimeout)
+  },
+
+  /**
+   * Set whether or not the window titles are regularly updated
+   * @param { Boolean } enable
+   */
+  setTitlesUpdateFlag: function (enable) {
+    this.updateTitles = enable
+    if (this.updateTitles && !window.titleTimeout) {
+      setInterval(window.requestWindowTitles, 5000)
+    } else if (!this.updateTitles) clearInterval(window.titleTimeout)
+  },
+
+  /**
+   * Request a count of the number of monitors
+   * @param { String } callback
+   */
+  requestMonitorCount: function (callback) {
+    window.GetMonitorCount(callback)
+  },
+
+  /**
+   *
+   * @param { Number } uid
+   * @param { Number } setting
+   * @param { * } value
+   */
+  setWinSetting: function (uid, setting, value) {
+    window.SetOverlaySetting(uid, setting, value)
   }
 }

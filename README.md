@@ -38,6 +38,11 @@ This library wraps the OVR Toolkit API and provides properties and helper method
     * [Toggle HMD/Controller Position Updates](#toggle-hmdcontroller-position-updates)
     * [Toggle Window List Updates](#toggle-window-list-updates)
     * [Toggle Window Move/Resize Updates](#toggle-window-moveresize-updates)
+  * [Constants](#constants)
+    * [Window Attachment Points](#window-attachment-points)
+    * [Window Types](#window-types)
+    * [Window Settings](#window-settings)
+    * [New Transform](#new-transform)
 * [Events](#events)
   * [Window Opened](#window-opened)
   * [Window Closed](#window-closed)
@@ -355,6 +360,73 @@ ovrt.updateDeviceInfo // Default: false
 ```
 
 When set to `true` the [`ovrt.deviceInfo`](#hmdcontroller-positions) property will be automatically updated with HMD and controller position data.
+
+### Constants
+
+This library abstracts the integer [constants from the wiki](http://wiki.ovrtoolkit.co.uk/index.php?title=CustomApps#Constants) into objects with memorable keys.
+
+#### Window Attached Device
+```javascript
+ovrt.winDevices = {
+  world: 0,
+  hmd: 1,
+  leftHand: 2,
+  rightHand: 3
+}
+```
+
+**[Wiki page on devices](http://wiki.ovrtoolkit.co.uk/index.php?title=CustomApps#Devices)**
+
+#### Window Types
+```javascript
+ovrt.winTypes = {
+  web: 0,
+  desktop: 1,
+  window: 2
+}
+```
+
+**[Wiki page on window types](http://wiki.ovrtoolkit.co.uk/index.php?title=CustomApps#Window_types)**
+
+#### Window Settings
+```javascript
+ovrt.winSettings = {
+  size: 0,
+  opacity: 1,
+  curvature: 2,
+  framerate: 3,
+  ecoMode: 4,
+  lookHiding: 5,
+  attachedDevice: 6
+}
+```
+
+**[Wiki page on settings values](http://wiki.ovrtoolkit.co.uk/index.php?title=CustomApps#Settings)**
+
+
+#### New Transform
+```javascript
+ovrt.newTransform = {
+  posX: 0.0,
+  posY: 0.0,
+  posZ: 0.0,
+  rotX: 0.0,
+  rotY: 0.0,
+  rotZ: 0.0,
+  size: 0.25, // Meters
+  opacity: 1.0,
+  curvature: 0.0,
+  framerate: 60,
+  ecoMode: true,
+  lookHiding: false,
+  attachedDevice: 0,
+  shouldSave: false
+}
+```
+
+**[Wiki page on OVROverlayTransform](http://wiki.ovrtoolkit.co.uk/index.php?title=CustomApps#OVROverlayTransform)**
+
+This object is used if no transform is provided to [`ovrt.requestWinSpawn`](#spawn-window).
 
 ## Events
 These events are available for you to override with your own function definitions.

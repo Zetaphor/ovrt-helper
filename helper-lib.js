@@ -55,6 +55,7 @@ window.ovrt = {
     size: 0.25, // Meters
     opacity: 1.0,
     curvature: 0.0,
+    framerate: 60,
     ecoMode: true,
     lookHiding: false,
     attachedDevice: 0,

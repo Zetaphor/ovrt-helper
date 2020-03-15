@@ -333,7 +333,7 @@ When [`ovrt.updateDeviceInfo`](#hmdcontroller-position-updates) is `true` this p
 ovrt.updateFingers // Default: false
 ```
 
-When set to `true` with [`ovrt.setFingerUpdateFlag`]() the values of the fingers for Knuckles controllers will be stored in [`ovrt.fingerCurls`](#knuckles-finger-curls).
+When set to `true` with [`ovrt.setFingerUpdateFlag`](#toggle-knuckles-finger-curl-updates) the values of the fingers for Knuckles controllers will be stored in [`ovrt.fingerCurls`](#knuckles-finger-curls).
 
 #### Update Window List
 ```javascript
@@ -347,7 +347,7 @@ When set to `true` with [`ovrt.setTitlesUpdateFlag`](#toggle-window-list-updates
 ovrt.updateWindows // Default: false
 ```
 
-When set to `true` with [`ovrt.setWinUpdateFlag`]() the `ovrt.onWinTransformChanged` event will be called whenever a window is moved or resized.
+When set to `true` with [`ovrt.setWinUpdateFlag`](#toggle-window-moveresize-updates) the `ovrt.onWinTransformChanged` event will be called whenever a window is moved or resized.
 
 #### HMD/Controller Position Updates
 ```javascript

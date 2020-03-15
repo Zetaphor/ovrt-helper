@@ -61,7 +61,7 @@ url | String | URL to open the web screen to
 width | Number | The width of the screen in pixels
 height | Number | The height of the screen in pixels
 callback | Function | A function definition to callback once the window is created
-data | Object | This object will be passed to the callback along with the window uid | True
+data | Any | This value will be passed as a second parameter to the callback after the window uid | True
 
 #### Desktop Window
 ```javascript
@@ -72,7 +72,7 @@ Argument | Type | Description | Optional
 -------- | ---- | ----------- | --------
 monitorId | Number | Which display to capture
 callback | Function | A function definition to callback once the window is created
-data | Object | This object will be passed to the callback along with the window uid | True
+data | Any | This value will be passed as a second parameter to the callback after the window uid | True
 
 #### Application Window
 ```javascript
@@ -83,7 +83,7 @@ Argument | Type | Description | Optional
 -------- | ---- | ----------- | --------
 windowHandle | Number | Which display to capture
 callback | Function | A function definition to callback once the window is created
-data | Object | This object will be passed to the callback along with the window uid | True
+data | Any | This value will be passed as a second parameter to the callback after the window uid | True
 
 #### Spawn Window
 ```javascript
@@ -99,7 +99,7 @@ Argument | Type | Description | Optional
 type | Number | Which display to capture
 contents | Any | This window contents, can be OVRWebContents or Number
 callback | Function | A function definition to callback once the window is created
-data | Object | This object will be passed to the callback along with the window uid | True
+data | Any | This value will be passed as a second parameter to the callback after the window uid | True
 transform | Object | This object will be passed to the callback along with the window uid | True
 
 
@@ -116,7 +116,7 @@ Argument | Type | Description | Optional
 -------- | ---- | ----------- | --------
 uid | Number | The uid of the window to get a transform for
 callback | Function | A function definition to callback once the window is created
-data | Object | This object will be passed to the callback along with the window details | True
+data | Any | This value will be passed as a second parameter to the callback after the window details | True
 
 #### Close Window
 ```javascript
@@ -151,7 +151,7 @@ Argument | Type | Description | Optional
 -------- | ---- | ----------- | --------
 uid | Number | The uid of the window to get boundaries for
 callback | Function | A function definition to callback once the window is created
-data | Object | This object will be passed to the callback along with the window boundaries | True
+data | Any | This value will be passed as a second parameter to the callback after the window boundaries | True
 
 #### Set Window Position
 ```javascript
@@ -233,7 +233,7 @@ Get a count of the total number of physical displays. This is called automatical
 Argument | Type | Description | Optional
 -------- | ---- | ----------- | --------
 callback | Function | A function definition to callback once the monitor count is retreived
-data | Object | This object will be passed to the callback along with the monitor count | True
+data | Any | This value will be passed as a second parameter to the callback after the monitor count | True
 
 ### Get Window Titles
 ```javascript
@@ -245,7 +245,7 @@ Get a count of the total number of physical displays. This function is used inte
 Argument | Type | Description | Optional
 -------- | ---- | ----------- | --------
 callback | Function | A function definition to callback once the monitor count is retreived
-data | Object | This object will be passed to the callback along with the window titles | True
+data | Any | This value will be passed as a second parameter to the callback after the window titles | True
 
 ### Enable/Disable Updates
 

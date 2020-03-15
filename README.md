@@ -39,7 +39,7 @@ This library wraps the OVR Toolkit API and provides properties and helper method
     * [Toggle Window List Updates](#toggle-window-list-updates)
     * [Toggle Window Move/Resize Updates](#toggle-window-moveresize-updates)
   * [Constants](#constants)
-    * [Window Attachment Points](#window-attachment-points)
+    * [Window Attached Device](#window-attached-device)
     * [Window Types](#window-types)
     * [Window Settings](#window-settings)
     * [New Transform](#new-transform)

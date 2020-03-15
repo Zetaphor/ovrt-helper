@@ -92,7 +92,7 @@ ovrt.requestWinSpawn(type, contents, callback, data, transform)
 
 Makes a request to OVRToolkit for a new window to be spawned with the specified properties. `type` must match an [OVR Toolkit window type constant](http://wiki.ovrtoolkit.co.uk/index.php?title=CustomApps#Window_types).
 
-Contents value is determined by the window type. Desktops require a Number monitorId, applicaitions require a Number windowHandle, and web screens require an [OVRWebContents object](http://wiki.ovrtoolkit.co.uk/index.php?title=CustomApps#OVRWebContents). This method is used internally by `createWin`, `createDesktopWin`, and `createWebWin`.
+Contents value is determined by the window type. Desktops require a Number monitorId, applicaitions require a Number windowHandle, and web screens require an [OVRWebContents object](http://wiki.ovrtoolkit.co.uk/index.php?title=CustomApps#OVRWebContents). This method is used internally by [`createWin`](#application-window), [`createDesktopWin`](#desktop-window), and [`createWebWin`](#web-window).
 
 Argument | Type | Description | Optional
 -------- | ---- | ----------- | --------
@@ -187,7 +187,7 @@ Set the setting of a window to `value`. See the list of [OVR Tookit window setti
 Argument | Type | Description
 -------- | ---- | -----------
 uid | Number | The uid of the window to update position for
-setting | Number | The setting ID you want to change
+setting | Number | The number for the setting you want to change
 value | Any | The new value for the setting
 
 ### Messaging
@@ -228,7 +228,7 @@ targetId | Number | The uid of the target window
 ovrt.requestMonitorCount(callback, data)
 ```
 
-Get a count of the total number of physical displays. This is called automatically when this library is first loaded and the value is saved in `ovrt.totalMonitors`.
+Get a count of the total number of physical displays. This is called automatically when this library is first loaded and the value is saved in [`ovrt.totalMonitors`](#total-monitors).
 
 Argument | Type | Description | Optional
 -------- | ---- | ----------- | --------
@@ -240,7 +240,7 @@ data | Any | This value will be passed as a second parameter to the callback aft
 ovrt.requestWinTitles(callback, data)
 ```
 
-Get a count of the total number of physical displays. This function is used internally to update `ovrt.winTitles` when `ovrt.updateTitles` is `true`.
+Get a count of the total number of physical displays. This function is used internally to update [`ovrt.winTitles`](#window-list) when [`ovrt.updateTitles`](#update-window-list) is `true`.
 
 Argument | Type | Description | Optional
 -------- | ---- | ----------- | --------
@@ -254,7 +254,7 @@ data | Any | This value will be passed as a second parameter to the callback aft
 ovrt.setDeviceUpdateFlag(enable)
 ```
 
-When set to `true` the `ovrt.deviceInfo` property will be automatically updated with HMD and controller position data.
+Updates the value of [`ovrt.updateDeviceInfo`](#hmdcontroller-positions). When set to `true` the [`ovrt.deviceInfo`](#hmdcontroller-positions) property will be automatically updated with HMD and controller position data.
 
 Argument | Type | Description
 -------- | ---- | -----------
@@ -265,7 +265,7 @@ enable | Boolean | Whether to allow device updates
 ovrt.setFingerUpdateFlag(enable)
 ```
 
-When set to `true` the `ovrt.fingerCurls` property will be automatically updated with the curls of each finger as read by Knuckles controllers.
+Updates the value of [`ovrt.updateFingers`](#update-knuckles-finger-curls). When set to `true` the [`ovrt.fingerCurls`](#knuckles-finger-curls) property will be automatically updated with the curls of each finger as read by Knuckles controllers.
 
 Argument | Type | Description
 -------- | ---- | -----------
@@ -276,7 +276,7 @@ enable | Boolean | Whether to allow finger curl updates
 ovrt.setTitlesUpdateFlag(enable)
 ```
 
-When set to `true` the `ovrt.winTitles` property will be automatically updated with the list of open windows.
+Updates the value of [`ovrt.updateTitles`](#update-window-list). When set to `true` the [`ovrt.winTitles`](#window-list) property will be automatically updated with the list of open windows.
 
 Argument | Type | Description
 -------- | ---- | -----------
@@ -287,7 +287,7 @@ enable | Boolean | Whether to allow window list updates
 ovrt.setWinUpdateFlag(enable)
 ```
 
-When set to `true` the `ovrt.onWinTransformChanged` event will be called when the window is moved or resized.
+Updates the value of [`ovrt.updateWindows`](#window-moveresize-updates). When set to `true` the [`ovrt.onWinTransformChanged`](#window-movedresized) event will be called when the window is moved or resized.
 
 Argument | Type | Description
 -------- | ---- | -----------
@@ -303,28 +303,28 @@ The following properties are available for reading the state of the OVR Toolkit 
 ovrt.totalMonitors // Number
 ```
 
-Contains the total number of attached physical displays. For use with `ovrt.createDesktopWin`.
+Contains the total number of attached physical displays. For use with [`ovrt.createDesktopWin`](#desktop-window).
 
 #### Window List
 ```javascript
 ovrt.winTitles // Object
 ```
 
-When `ovrt.updateWindows` is `true` this property Contains a list of all currently open windows.
+When [`ovrt.updateWindows`](#window-list) is `true` this property Contains a list of all currently open windows.
 
 #### Knuckles Finger Curls
 ```javascript
 ovrt.fingerCurls // Object
 ```
 
-When `ovrt.updateFingers` is `true` this property contains a list of the curl of each finger as read by Knuckles controllers.
+When [`ovrt.updateFingers`](#update-knuckles-finger-curls) is `true` this property contains a list of the curl of each finger as read by Knuckles controllers.
 
 #### HMD/Controller Positions
 ```javascript
 ovrt.deviceInfo // Object
 ```
 
-When `ovrt.updateDeviceInfo` is `true` this property contains the positions of the HMD and controllers.
+When [`ovrt.updateDeviceInfo`](#hmdcontroller-position-updates) is `true` this property contains the positions of the HMD and controllers.
 
 ### Update Flags
 
@@ -333,28 +333,28 @@ When `ovrt.updateDeviceInfo` is `true` this property contains the positions of t
 ovrt.updateFingers // Default: false
 ```
 
-When set to `true` with `ovrt.setFingerUpdateFlag` the values of the fingers for Knuckles controllers will be stored in `ovrt.fingerCurls`.
+When set to `true` with [`ovrt.setFingerUpdateFlag`]() the values of the fingers for Knuckles controllers will be stored in [`ovrt.fingerCurls`](#knuckles-finger-curls).
 
 #### Update Window List
 ```javascript
 ovrt.updateTitles // Default: false
 ```
 
-When set to `true` with `ovrt.setTitlesUpdateFlag` the list of open windows will be stored in `ovrt.winTitles`.
+When set to `true` with [`ovrt.setTitlesUpdateFlag`](#toggle-window-list-updates) the list of open windows will be stored in [`ovrt.winTitles`](#window-list).
 
 #### Window Move/Resize Updates
 ```javascript
 ovrt.updateWindows // Default: false
 ```
 
-When set to `true` with `ovrt.setWinUpdateFlag` the `ovrt.onWinTransformChanged` event will be called whenever a window is moved or resized.
+When set to `true` with [`ovrt.setWinUpdateFlag`]() the `ovrt.onWinTransformChanged` event will be called whenever a window is moved or resized.
 
 #### HMD/Controller Position Updates
 ```javascript
-ovrt.updateWindows // Default: false
+ovrt.updateDeviceInfo // Default: false
 ```
 
-When set to `true` with `ovrt.setWinUpdateFlag` the `ovrt.onWinTransformChanged` event will be called whenever a window is moved or resized.
+When set to `true` the [`ovrt.deviceInfo`](#hmdcontroller-positions) property will be automatically updated with HMD and controller position data.
 
 ## Events
 These events are available for you to override with your own function definitions.
@@ -363,7 +363,7 @@ These events are available for you to override with your own function definition
 ovrt.onWinTransformChanged(transformUpdate)
 ```
 
-Only triggers if `ovrt.updateWindows` is `true`. Sends an [OVRTransformUpdate](http://wiki.ovrtoolkit.co.uk/index.php?title=CustomApps#OVRTransformUpdate) object.
+Only triggers if [`ovrt.updateWindows`](#hmdcontroller-position-updates) is `true`. Sends an [OVRTransformUpdate](http://wiki.ovrtoolkit.co.uk/index.php?title=CustomApps#OVRTransformUpdate) object.
 
 
 ### Window Opened
@@ -393,4 +393,4 @@ ovrt.onWinInteractionChanged(isInteracting)
 ovrt.onMessageReceived(message)
 ```
 
-`message` is a string containing the data sent by `ovrt.broadcast` or `ovrt.sendMessage`.
+`message` is a string containing the data sent by [`ovrt.broadcast`](#broadcast-to-all-web-windows) or [`ovrt.sendMessage`](#send-to-a-specific-web-window).

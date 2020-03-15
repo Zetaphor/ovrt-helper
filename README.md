@@ -5,28 +5,28 @@ This library wraps the OVR Toolkit API and provides properties and helper method
 #### **[OVR Toolkit Custom Apps Wiki Page](http://wiki.ovrtoolkit.co.uk/index.php?title=CustomApps)**
 
 ## **Table Of Contents**
-* Methods
-  * Creating Windows
-    * Web Window
-    * Desktop Window
-    * Application Window
-  * Using Windows
-    * Get Window Details
-* Properties
-  * Data Properties
-    * Total Monitors
-    * Window List
-    * Knuckles Finger Curls
-    * HMD/Controller Positions
-  * Update Flags
-    * Knuckles Finger Updates
-    * Window List Updates
-    * Window Move/Resize Updates
-    * HMD/Controller Position Updates
-* Events
-  * Window Opened
-  * Window Closed
-  * Window Mouse Enter/Leave
+* [Methods](#methods)
+  * [Creating Windows](#)
+    * [Web Window](#web-window)
+    * [Desktop Window](#desktop-window)
+    * [Application Window](#application-window)
+  * [Using Windows](#using-windows)
+    * [Get Window Details](#get-window-details)
+* [Properties](#properties)
+  * [Data Properties](#data-properties)
+    * [Total Monitors](#total-monitors)
+    * [Window List](#window-list)
+    * [Knuckles Finger Curls](#knuckles-finger-curls)
+    * [HMD/Controller Positions](#hmdcontroller-positions)
+  * [Update Flags](#update-flags)
+    * [Knuckles Finger Updates](#knuckles-finger-updates)
+    * [Window List Updates](#window-list-updates)
+    * [Window Move/Resize Updates](#window-moveresize-updates)
+    * [HMD/Controller Position Updates](#hmdcontroller-position-updates)
+* [Events](#events)
+  * [Window Opened](#window-opened)
+  * [Window Closed](#window-closed)
+  * [Window Mouse Enter/Leave](#window-mouse-enterleave)
 
 
 ## Methods

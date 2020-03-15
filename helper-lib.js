@@ -16,7 +16,7 @@ let fingersTimeout = setInterval(requestFingerCurls, 5000)
 function requestFingerCurls () { window.GetFingerCurls('completeFingerCurls') }
 function completeFingerCurls (curls) { window.ovrt.fingerCurls = curls }
 
-function DevicePositionUpdate (deviceInfo) { if (window.ovrt.updateDevice) window.ovrt.deviceInfo = deviceInfo }
+function DevicePositionUpdate (deviceInfo) { if (window.ovrt.updateDeviceInfo) window.ovrt.deviceInfo = deviceInfo }
 function OverlayTransformChanged (updateData) { if (window.ovrt.updateWindows) window.ovrt.onWinTransformChanged(updateData) }
 function InteractionStateChanged (isInteracting) { window.ovrt.onWinInteractionChanged(isInteracting) }
 function OverlayOpened (uid) { window.ovrt.onWinOpened(uid) }
@@ -71,7 +71,7 @@ window.ovrt = {
   updateFingers: false,
   updateTitles: false,
   updateWindows: false,
-  updateDevice: false,
+  updateDeviceInfo: false,
 
   spawnQueue: [],
   detailsQueue: [],
@@ -262,7 +262,7 @@ window.ovrt = {
    * @param { Boolean } enable
    */
   setDeviceUpdateFlag: function (enable) {
-    this.updateDevice = enable
+    this.updateDeviceInfo = enable
     window.SendDeviceData(enable)
   },
 

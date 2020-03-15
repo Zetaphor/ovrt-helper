@@ -5,10 +5,12 @@
 		<button onclick="testSpawn()">Spawn overlay</button>
 		<p>Overlay ID:</p>
 		<p id="uid">N/A</p>
+		<div id="output"></div>
 		<button onclick="setToWebpage()">Set to web page</button>
 		<button onclick="setToTwitch()">Set to Twitch chat</button>
 		<button onclick="closeOverlay()">Close overlay</button>
 		<button onclick="setPosition()">Set position to 0,0,0</button>
+		<button onclick="getMonitorCount()">Get monitor count</button>
 		<script>
 			var overlayTransform = {
 				"posX": 0,
@@ -38,6 +40,15 @@
 				"width": 400,
 				"height": 600
 			};
+
+			function getMonitorCount() {
+				GetMonitorCount("monitorCount")
+			}
+
+			function monitorCount(total) {
+				console.log('total', total)
+				document.getElementById("output").innerHTML += 'total'
+			}
 
 			// Call function to spawn overlay.
 			function testSpawn() {

@@ -10,11 +10,22 @@ This library wraps the OVR Toolkit API and provides properties and helper method
     * [Web Window](#web-window)
     * [Desktop Window](#desktop-window)
     * [Application Window](#application-window)
+    * [Spawn Window](#spawn-window)
   * [Using Windows](#using-windows)
     * [Get Window Details](#get-window-details)
+    * [Close Window](#close-window)
+    * [Refresh Web Window](#refresh-web-window)
+    * [Get Window Boundaries](#get-window-boundaries)
+    * [Set Window Position](#set-window-position)
+    * [Set Window Rotation](#set-window-rotation)
+    * [Set Window Setting](#set-window-setting)
   * [Messaging](#messaging)
     * [Broadcast To All Web Windows](#broadcast-to-all-web-windows)
     * [Send To A Specific Web Window](#send-to-a-specific-web-window)
+  * [Update Properties](#update-properties)
+    * [Get Monitor Count](#get-monitor-count)
+    * [Get Window Titles](#get-window-titles)
+  * [Enable/Disable Updates](#enabledisable-updates)
 * [Properties](#properties)
   * [Data Properties](#data-properties)
     * [Total Monitors](#total-monitors)
@@ -22,10 +33,11 @@ This library wraps the OVR Toolkit API and provides properties and helper method
     * [Knuckles Finger Curls](#knuckles-finger-curls)
     * [HMD/Controller Positions](#hmdcontroller-positions)
   * [Update Flags](#update-flags)
-    * [Knuckles Finger Updates](#knuckles-finger-updates)
-    * [Window List Updates](#window-list-updates)
-    * [Window Move/Resize Updates](#window-moveresize-updates)
-    * [HMD/Controller Position Updates](#hmdcontroller-position-updates)
+    * [Toggle Knuckles Finger Curl Updates](#toggle-knuckles-finger-curl-updates)
+    * [Toggle Window List Updates](#toggle-window-list-updates)
+    * [Toggle HMD/Controller Position Updates](#toggle-hmdcontroller-position-updates)
+    * [Toggle Window List Updates](#toggle-window-list-updates)
+    * [Toggle Window Move/Resize Updates](#toggle-window-moveresize-updates)
 * [Events](#events)
   * [Window Opened](#window-opened)
   * [Window Closed](#window-closed)
@@ -72,6 +84,24 @@ Argument | Type | Description | Optional
 windowHandle | Number | Which display to capture
 callback | Function | A function definition to callback once the window is created
 data | Object | This object will be passed to the callback along with the window uid | True
+
+#### Spawn Window
+```javascript
+ovrt.requestWinSpawn(type, contents, callback, data, transform)
+```
+
+Makes a request to OVRToolkit for a new window to be spawned with the specified properties. `type` must match an [OVR Toolkit window type constant](http://wiki.ovrtoolkit.co.uk/index.php?title=CustomApps#Window_types).
+
+Contents value is determined by the window type. Desktops require a Number monitorId, applicaitions require a Number windowHandle, and web screens require an [OVRWebContents object](http://wiki.ovrtoolkit.co.uk/index.php?title=CustomApps#OVRWebContents). This method is used internally by `createWin`, `createDesktopWin`, and `createWebWin`.
+
+Argument | Type | Description | Optional
+-------- | ---- | ----------- | --------
+type | Number | Which display to capture
+contents | Any | This window contents, can be OVRWebContents or Number
+callback | Function | A function definition to callback once the window is created
+data | Object | This object will be passed to the callback along with the window uid | True
+transform | Object | This object will be passed to the callback along with the window uid | True
+
 
 ### Using Windows
 
@@ -123,9 +153,42 @@ uid | Number | The uid of the window to get boundaries for
 callback | Function | A function definition to callback once the window is created
 data | Object | This object will be passed to the callback along with the window boundaries | True
 
+#### Set Window Position
+```javascript
+ovrt.setWinPosition(uid, pos)
+```
 
-setWinPosition
-setWinRotation
+Set the windows position in 3D space.
+
+Argument | Type | Description
+-------- | ---- | -----------
+uid | Number | The uid of the window to update position for
+pos | Object | An object containing the properties x, y, and z
+
+#### Set Window Rotation
+```javascript
+ovrt.setWinPosition(uid, rot)
+```
+
+Set the windows rotation in 3D space.
+
+Argument | Type | Description
+-------- | ---- | -----------
+uid | Number | The uid of the window to update position for
+rot | Object | An object containing the properties x, y, and z
+
+#### Set Window Setting
+```javascript
+ovrt.setWinSetting(uid, setting, value)
+```
+
+Set the setting of a window to `value`. See the list of [OVR Tookit window settings](http://wiki.ovrtoolkit.co.uk/index.php?title=CustomApps#Settings).
+
+Argument | Type | Description
+-------- | ---- | -----------
+uid | Number | The uid of the window to update position for
+setting | Number | The setting ID you want to change
+value | Any | The new value for the setting
 
 ### Messaging
 
@@ -158,14 +221,77 @@ data | String | The payload to send with the message event
 senderId | Number | The uid of the sender window
 targetId | Number | The uid of the target window
 
+### Update Properties
 
-requestMonitorCount
-requestWinTitles
-setDeviceUpdateFlag
-setFingerUpdateFlag
-setTitlesUpdateFlag
-setWinUpdateFlag
-setWinSetting
+### Get Monitor Count
+```javascript
+ovrt.requestMonitorCount(callback, data)
+```
+
+Get a count of the total number of physical displays. This is called automatically when this library is first loaded and the value is saved in `ovrt.totalMonitors`.
+
+Argument | Type | Description | Optional
+-------- | ---- | ----------- | --------
+callback | Function | A function definition to callback once the monitor count is retreived
+data | Object | This object will be passed to the callback along with the monitor count | True
+
+### Get Window Titles
+```javascript
+ovrt.requestWinTitles(callback, data)
+```
+
+Get a count of the total number of physical displays. This function is used internally to update `ovrt.winTitles` when `ovrt.updateTitles` is `true`.
+
+Argument | Type | Description | Optional
+-------- | ---- | ----------- | --------
+callback | Function | A function definition to callback once the monitor count is retreived
+data | Object | This object will be passed to the callback along with the window titles | True
+
+### Enable/Disable Updates
+
+#### Toggle HMD/Controller Position Updates
+```javascript
+ovrt.setDeviceUpdateFlag(enable)
+```
+
+When set to `true` the `ovrt.deviceInfo` property will be automatically updated with HMD and controller position data.
+
+Argument | Type | Description
+-------- | ---- | -----------
+enable | Boolean | Whether to allow device updates
+
+#### Toggle Knuckles Finger Curl Updates
+```javascript
+ovrt.setFingerUpdateFlag(enable)
+```
+
+When set to `true` the `ovrt.fingerCurls` property will be automatically updated with the curls of each finger as read by Knuckles controllers.
+
+Argument | Type | Description
+-------- | ---- | -----------
+enable | Boolean | Whether to allow finger curl updates
+
+#### Toggle Window List Updates
+```javascript
+ovrt.setTitlesUpdateFlag(enable)
+```
+
+When set to `true` the `ovrt.winTitles` property will be automatically updated with the list of open windows.
+
+Argument | Type | Description
+-------- | ---- | -----------
+enable | Boolean | Whether to allow window list updates
+
+#### Toggle Window Move/Resize Updates
+```javascript
+ovrt.setWinUpdateFlag(enable)
+```
+
+When set to `true` the `ovrt.onWinTransformChanged` event will be called when the window is moved or resized.
+
+Argument | Type | Description
+-------- | ---- | -----------
+enable | Boolean | Whether to allow window move/resize updates
 
 ## Properties
 The following properties are available for reading the state of the OVR Toolkit settings or window update toggles.
@@ -198,18 +324,18 @@ When `ovrt.updateFingers` is `true` this property contains a list of the curl of
 ovrt.deviceInfo // Object
 ```
 
-When `ovrt.updateDeviceInfo` is `true` this property contains a list of the curl of each finger as read by Knuckles controllers.
+When `ovrt.updateDeviceInfo` is `true` this property contains the positions of the HMD and controllers.
 
 ### Update Flags
 
-#### Knuckles Finger Updates
+#### Update Knuckles Finger Curls
 ```javascript
 ovrt.updateFingers // Default: false
 ```
 
 When set to `true` with `ovrt.setFingerUpdateFlag` the values of the fingers for Knuckles controllers will be stored in `ovrt.fingerCurls`.
 
-#### Window List Updates
+#### Update Window List
 ```javascript
 ovrt.updateTitles // Default: false
 ```

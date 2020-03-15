@@ -6,9 +6,38 @@
   </head>
   <body>
     <div id="output"></div>
-    <button onclick="ovrt.createWebWin('duckduckgo.com', 1024, 768)">Create Web Window</button>
-    <button onclick="ovrt.createDesktopWin(0)">Create Desktop Window</button>
-    <button>Create Application Window</button>
+    <button onclick="createWeb">Create Web Window</button>
+    <button onclick="createDesktop">Create Desktop Window</button>
+    <!-- <button>Create Application Window</button> -->
     <script src="ovrt-helper-lib.js"></script>
+    <script>
+      function createWeb () {
+        window.ovrt.createWebWin('duckduckgo.com', 1024, 768)
+      }
+
+      function createDesktop () {
+        window.ovrt.createDesktopWin(0)
+      }
+
+      window.ovrt.onWinOpened = function (uid) {
+        console.log('Captured window open', uid)
+      }
+
+      window.ovrt.onWinClosed = function (uid) {
+        console.log('Captured window closed', uid)
+      }
+
+      window.ovrt.onWinInteractionChanged = function (isInteracting) {
+        console.log('Captured interaction change', isInteracting)
+      }
+
+      window.ovrt.onMessageReceived = function (message) {
+        console.log('Captured message received', message)
+      }
+
+      window.ovrt.onWinTitlesUpdated = function (titles) {
+        console.log('Captured title update', titles)
+      }
+    </script>
   </body>
 </html>

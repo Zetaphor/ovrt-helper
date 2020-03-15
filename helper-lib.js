@@ -1,6 +1,3 @@
-// function DevicePositionUpdate (deviceInfo) { window.ovrt.devicePositionUpdate(deviceInfo) }
-// function ReceiveMessage (message) { window.ovrt.receiveMessage(message) }
-// function InteractionStateChanged (isInteracting) { window.ovrt.InteractionStateChanged(isInteracting) }
 function ovrtWinSpawned (uid) { window.ovrt.completeWinSpawn(uid) }
 function ovrtWinDetailed (details) { window.ovrt.completeWinDetails(details) }
 function ovrtWinTitles (titles) { window.ovrt.completeWindowTitles(titles) }
@@ -19,6 +16,7 @@ function completeFingerCurls (curls) { window.ovrt.fingerCurls = curls }
 function DevicePositionUpdate (deviceInfo) { if (window.ovrt.updateDeviceInfo) window.ovrt.deviceInfo = deviceInfo }
 function OverlayTransformChanged (updateData) { if (window.ovrt.updateWindows) window.ovrt.onWinTransformChanged(updateData) }
 function InteractionStateChanged (isInteracting) { window.ovrt.onWinInteractionChanged(isInteracting) }
+function ReceiveMessage (message) { window.ovrt.onMessageReceived(message) }
 function OverlayOpened (uid) { window.ovrt.onWinOpened(uid) }
 function OverlayClosed (uid) { window.ovrt.onWinClosed(uid) }
 
@@ -82,6 +80,7 @@ window.ovrt = {
   onWinOpened: function (uid) { console.log('WindowOpened', uid) },
   onWinClosed: function (uid) { console.log('WindowClosed', uid) },
   onWinInteractionChanged: function (isInteracting) { console.log('WinInteractionChanged', isInteracting) },
+  onMessageReceived: function (message) { console.log('MessageReceived', message) },
 
   /**
    * Broadcast a message to all open browser instances
@@ -114,16 +113,6 @@ window.ovrt = {
   },
 
   /**
-   * Receive a message from another browser instance
-   * @param { String } messageStr
-   */
-  receiveMessage: function (messageStr) {
-    let message = JSON.parse(messageStr)
-    if (message.broadcast) console.log('Received Broadcast:', message)
-    else console.log('Received message:', message)
-  },
-
-  /**
    * Add a request for a window spawn to the queue
    * @param { Number } type
    * @param { * } contents
@@ -131,7 +120,7 @@ window.ovrt = {
    * @param { Boolean } broadcast
    * @param { Object } transform
    */
-  requestWinSpawn: function (type, contents, callback, data, broadcast, transform) {
+  requestWinSpawn: function (type, contents, callback, data, transform) {
     if (typeof shouldSave === 'undefined') shouldSave = false
     if (typeof broadcast === 'undefined') broadcast = true
     if (typeof transform === 'undefined') transform = this.newTransform
@@ -139,7 +128,6 @@ window.ovrt = {
       type: type,
       contents: contents,
       callback: callback,
-      broadcast: broadcast,
       transform: transform
     })
     SpawnOverlay(JSON.stringify(transform), 'ovrtWinSpawned', data)
@@ -153,7 +141,6 @@ window.ovrt = {
     let winData = this.spawnQueue.shift()
     window.SetContents(uid, winData.type, winData.contents)
     windowData.uid = uid
-    if (winData.broadcast) this.broadcast('winCreated', winData)
     if (typeof winData.callback === 'function') winData['callback'](winData, data)
   },
 
@@ -317,7 +304,7 @@ window.ovrt = {
     if (typeof width === 'undefined') width = 600
     if (typeof height === 'undefined') height = 600
     let contents = { url: url, width: width, height: height }
-    this.queueWinSpawn(this.winTypes.web, contents, callback, data)
+    this.requestWinSpawn(this.winTypes.web, contents, callback, data)
   },
 
   /**
@@ -326,7 +313,7 @@ window.ovrt = {
    * @param { Function } callback
    */
   createDesktopWin: function (monitorId, callback, data) {
-    this.queueWinSpawn(this.winTypes.desktop, monitorId, callback, data)
+    this.requestWinSpawn(this.winTypes.desktop, monitorId, callback, data)
   },
 
   /**
@@ -335,6 +322,6 @@ window.ovrt = {
    * @param { Function } callback
    */
   createWin: function (windowHandle, callback, data) {
-    this.queueWinSpawn(this.winTypes.window, windowHandle, callback, data)
+    this.requestWinSpawn(this.winTypes.window, windowHandle, callback, data)
   },
 }

@@ -12,6 +12,9 @@ This library wraps the OVR Toolkit API and provides properties and helper method
     * [Application Window](#application-window)
   * [Using Windows](#using-windows)
     * [Get Window Details](#get-window-details)
+  * [Messaging](#messaging)
+    * [Broadcast To All Web Windows](#broadcast-to-all-web-windows)
+    * [Send To A Specific Web Window](#send-to-a-specific-web-window)
 * [Properties](#properties)
   * [Data Properties](#data-properties)
     * [Total Monitors](#total-monitors)
@@ -27,6 +30,7 @@ This library wraps the OVR Toolkit API and provides properties and helper method
   * [Window Opened](#window-opened)
   * [Window Closed](#window-closed)
   * [Window Mouse Enter/Leave](#window-mouse-enterleave)
+  * [Message Received](#message-received)
 
 
 ## Methods
@@ -82,8 +86,86 @@ Argument | Type | Description | Optional
 -------- | ---- | ----------- | --------
 uid | Number | The uid of the window to get a transform for
 callback | Function | A function definition to callback once the window is created
-data | Object | This object will be passed to the callback along with the window uid | True
+data | Object | This object will be passed to the callback along with the window details | True
 
+#### Close Window
+```javascript
+ovrt.closeWin(uid)
+```
+
+Close a window.
+
+Argument | Type | Description
+-------- | ---- | -----------
+uid | Number | The uid of the window to close
+
+#### Refresh Web Window
+```javascript
+ovrt.refreshWin(uid)
+```
+
+Refresh the browser in a web window.
+
+Argument | Type | Description
+-------- | ---- | -----------
+uid | Number | The uid of the window to refresh
+
+#### Get Window Boundaries
+```javascript
+ovrt.getWinBounds(uid, callback, data)
+```
+
+Get a windows boundaries. Returns an [OVROverlayBounds](http://wiki.ovrtoolkit.co.uk/index.php?title=CustomApps#OVROverlayBounds) object, which is a wrapper for the [Unity's `Bounds` type](https://docs.unity3d.com/ScriptReference/Bounds.html).
+
+Argument | Type | Description | Optional
+-------- | ---- | ----------- | --------
+uid | Number | The uid of the window to get boundaries for
+callback | Function | A function definition to callback once the window is created
+data | Object | This object will be passed to the callback along with the window boundaries | True
+
+
+setWinPosition
+setWinRotation
+
+### Messaging
+
+#### Broadcast To All Web Windows
+```javascript
+ovrt.broadcastMessage(event, data)
+```
+
+Broadcasts a message of type `event` with the payload `data` to all other open web windows.
+Only web windows will receive this event.
+
+Argument | Type | Description
+-------- | ---- | -----------
+event | String | A unique identifier for the message
+data | String | The payload to send with the message event
+
+#### Send To A Specific Web Window
+```javascript
+ovrt.sendMessage(event, data, senderId, targetId)
+```
+
+Sends a message of type `event` with the payload `data` to the window `targetId`.
+Only the window with whose `uid` matches `targetId` will receive this messaage.
+Only web windows will receive this event.
+
+Argument | Type | Description
+-------- | ---- | -----------
+event | String | A unique identifier for the message
+data | String | The payload to send with the message event
+senderId | Number | The uid of the sender window
+targetId | Number | The uid of the target window
+
+
+requestMonitorCount
+requestWinTitles
+setDeviceUpdateFlag
+setFingerUpdateFlag
+setTitlesUpdateFlag
+setWinUpdateFlag
+setWinSetting
 
 ## Properties
 The following properties are available for reading the state of the OVR Toolkit settings or window update toggles.
@@ -180,3 +262,9 @@ ovrt.onWinInteractionChanged(isInteracting)
 
 `isInteracting` is a boolean flag for whether or not the mouse is interacting with this window.
 
+### Message Received
+```javascript
+ovrt.onMessageReceived(message)
+```
+
+`message` is a string containing the data sent by `ovrt.broadcast` or `ovrt.sendMessage`.

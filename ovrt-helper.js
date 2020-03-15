@@ -5,11 +5,13 @@ function ovrtWinTitles (titles) { window.ovrt.completeWindowTitles(titles) }
 GetMonitorCount('ovrtMonitorTotal')
 function ovrtMonitorTotal (total) { window.ovrt.totalMonitors = total }
 
-let titleTimeout = setInterval(requestIntervalWindowTitles, 5000)
+let titleTimeout = -1
+let titleTimeoutInterval = 5000
 function requestIntervalWindowTitles () { window.GetWindowTitles('completeIntervalWinTitles') }
-function completeIntervalWinTitles (titles) { window.ovrt.winTitles = titles}
+function completeIntervalWinTitles (titles) { window.ovrt.winTitles = titles; window.ovrt.onWinTitlesUpdated(titles) }
 
-let fingersTimeout = setInterval(requestFingerCurls, 5000)
+let fingersTimeout = -1
+let fingerTimeoutInterval = 1000
 function requestFingerCurls () { window.GetFingerCurls('completeFingerCurls') }
 function completeFingerCurls (curls) { window.ovrt.fingerCurls = curls }
 
@@ -262,7 +264,7 @@ window.ovrt = {
   setFingerUpdateFlag: function (enable) {
     this.updateFingers = enable
     if (this.updateFingers && !window.fingersTimeout) {
-      setInterval(window.requestFingerCurls, 5000)
+      setInterval(window.requestFingerCurls, window.fingerTimeoutInterval)
     } else if (!this.updateFingers) clearInterval(window.fingersTimeout)
   },
 
@@ -273,7 +275,7 @@ window.ovrt = {
   setTitlesUpdateFlag: function (enable) {
     this.updateTitles = enable
     if (this.updateTitles && !window.titleTimeout) {
-      setInterval(window.requestIntervalWindowTitles, 5000)
+      setInterval(window.requestIntervalWindowTitles, window.titleTimeoutInterval)
     } else if (!this.updateTitles) clearInterval(window.titleTimeout)
   },
 

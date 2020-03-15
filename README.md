@@ -65,7 +65,7 @@ Argument | Type | Description | Optional
 url | String | URL to open the web screen to
 width | Number | The width of the screen in pixels
 height | Number | The height of the screen in pixels
-callback | Function | A function definition to callback once the window is created
+callback | Function | A function definition to callback once the window is created | True
 data | Any | This value will be passed as a second parameter to the callback after the window uid | True
 
 #### Desktop Window
@@ -76,7 +76,7 @@ ovrt.createDesktopWin(monitorId, callback, data)
 Argument | Type | Description | Optional
 -------- | ---- | ----------- | --------
 monitorId | Number | Which display to capture
-callback | Function | A function definition to callback once the window is created
+callback | Function | A function definition to callback once the window is created | True
 data | Any | This value will be passed as a second parameter to the callback after the window uid | True
 
 #### Application Window
@@ -87,7 +87,7 @@ ovrt.createWin(windowHandle, callback, data)
 Argument | Type | Description | Optional
 -------- | ---- | ----------- | --------
 windowHandle | Number | Which display to capture
-callback | Function | A function definition to callback once the window is created
+callback | Function | A function definition to callback once the window is created | True
 data | Any | This value will be passed as a second parameter to the callback after the window uid | True
 
 #### Spawn Window
@@ -103,7 +103,7 @@ Argument | Type | Description | Optional
 -------- | ---- | ----------- | --------
 type | Number | Which display to capture
 contents | Any | This window contents, can be OVRWebContents or Number
-callback | Function | A function definition to callback once the window is created
+callback | Function | A function definition to callback once the window is created | True
 data | Any | This value will be passed as a second parameter to the callback after the window uid | True
 transform | Object | This object will be passed to the callback along with the window uid | True
 
@@ -245,11 +245,11 @@ data | Any | This value will be passed as a second parameter to the callback aft
 ovrt.requestWinTitles(callback, data)
 ```
 
-Get a count of the total number of physical displays. This function is used internally to update [`ovrt.winTitles`](#window-list) when [`ovrt.updateTitles`](#update-window-list) is `true`.
+Get a count of the total number of physical displays. This function is used internally to update [`ovrt.winTitles`](#window-list) when [`ovrt.updateTitles`](#update-window-list) is `true`. When called directly it will update the value of [`ovrt.winTitles`](#window-list) on completion.
 
 Argument | Type | Description | Optional
 -------- | ---- | ----------- | --------
-callback | Function | A function definition to callback once the monitor count is retreived
+callback | Function | A function definition to callback once the monitor count is retreived | True
 data | Any | This value will be passed as a second parameter to the callback after the window titles | True
 
 ### Enable/Disable Updates

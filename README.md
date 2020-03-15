@@ -2,6 +2,9 @@
 
 This library wraps the OVR Toolkit API and provides properties and helper methods to make accessing and controlling windows easier. This script will only work when executed within a Custom App browser window in OVR Toolkit.
 
+TODO: Add note on request flow in library/OVR Toolkit
+
+
 #### **[OVR Toolkit Custom Apps Wiki Page](http://wiki.ovrtoolkit.co.uk/index.php?title=CustomApps)**
 
 ## **Table Of Contents**
@@ -75,7 +78,7 @@ ovrt.createDesktopWin(monitorId, callback, data)
 
 Argument | Type | Description | Optional
 -------- | ---- | ----------- | --------
-monitorId | Number | Which display to capture
+monitorId | Number | Which physical display to capture
 callback | Function | A function definition to callback once the window is created | True
 data | Any | This value will be passed as a second parameter to the callback after the window uid | True
 
@@ -86,7 +89,7 @@ ovrt.createWin(windowHandle, callback, data)
 
 Argument | Type | Description | Optional
 -------- | ---- | ----------- | --------
-windowHandle | Number | Which display to capture
+windowHandle | Number | A window handle from [`ovrt.windowTitles`](#window-list)
 callback | Function | A function definition to callback once the window is created | True
 data | Any | This value will be passed as a second parameter to the callback after the window uid | True
 
@@ -101,7 +104,7 @@ Contents value is determined by the window type. Desktops require a Number monit
 
 Argument | Type | Description | Optional
 -------- | ---- | ----------- | --------
-type | Number | Which display to capture
+type | Number | A window type as defined in [`ovrt.winTypes`](#window-types)
 contents | Any | This window contents, can be OVRWebContents or Number
 callback | Function | A function definition to callback once the window is created | True
 data | Any | This value will be passed as a second parameter to the callback after the window uid | True

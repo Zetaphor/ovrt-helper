@@ -82,6 +82,7 @@ window.ovrt = {
   onWinClosed: function (uid) { console.log('WindowClosed', uid) },
   onWinInteractionChanged: function (isInteracting) { console.log('WinInteractionChanged', isInteracting) },
   onMessageReceived: function (message) { console.log('MessageReceived', message) },
+  onWinTitlesUpdated: function (titles) { console.log('WinTitlesUpdated', titles) },
 
   /**
    * Broadcast a message to all open browser instances
@@ -198,6 +199,7 @@ window.ovrt = {
   completeWindowTitles: function (titles, data) {
     let titleData = this.titlesQueue.shift()
     this.winTitles = titles
+    this.onWinTitlesUpdated(titles)
     if (typeof titleData.callback === 'function') titleData['callback'](titles, data)
   },
 

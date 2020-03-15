@@ -1,3 +1,34 @@
+# OVR Toolkit API Helper
+
+This library wraps the OVR Toolkit API and provides properties and helper methods to make accessing and controlling windows easier. This script will only work when executed within a Custom App browser window in OVR Toolkit.
+
+#### **[OVR Toolkit Custom Apps Wiki Page](http://wiki.ovrtoolkit.co.uk/index.php?title=CustomApps)**
+
+## **Table Of Contents**
+* Methods
+  * Creating Windows
+    * Web Window
+    * Desktop Window
+    * Application Window
+  * Using Windows
+    * Get Window Details
+* Properties
+  * Data Properties
+    * Total Monitors
+    * Window List
+    * Knuckles Finger Curls
+    * HMD/Controller Positions
+  * Update Flags
+    * Knuckles Finger Updates
+    * Window List Updates
+    * Window Move/Resize Updates
+    * HMD/Controller Position Updates
+* Events
+  * Window Opened
+  * Window Closed
+  * Window Mouse Enter/Leave
+
+
 ## Methods
 
 ### Creating Windows
@@ -46,6 +77,7 @@ ovrt.requestWinDetails(uid, callback, data)
 ```
 
 Makes a request to OVR Toolkit for a windows [OVROverlayTransform](http://wiki.ovrtoolkit.co.uk/index.php?title=CustomApps#OVROverlayTransform) object.
+
 Argument | Type | Description | Optional
 -------- | ---- | ----------- | --------
 uid | Number | The uid of the window to get a transform for
@@ -141,7 +173,7 @@ ovrt.onWinClosed(uid)
 `uid` is the ID of the closed window.
 
 
-### Window Mouse enter/leave
+### Window Mouse Enter/Leave
 ```javascript
 ovrt.onWinInteractionChanged(isInteracting)
 ```

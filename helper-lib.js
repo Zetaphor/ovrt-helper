@@ -163,11 +163,10 @@ window.ovrt = {
    * @param { String } callback
    * @param { Number } targetId
    */
-  requestWinDetails: function (uid, targetId, callback, data) {
+  requestWinDetails: function (uid, callback, data) {
     this.detailsQueue.push({
       uid: uid,
-      callback: callback,
-      targetId: targetId
+      callback: callback
     })
     window.GetOverlayTransform(uid, 'ovrtWinDetailed', data)
   },
@@ -335,7 +334,7 @@ window.ovrt = {
    * @param { Number } windowHandle
    * @param { Function } callback
    */
-  createWindow: function (windowHandle, callback, data) {
+  createWin: function (windowHandle, callback, data) {
     this.queueWinSpawn(this.winTypes.window, windowHandle, callback, data)
   },
 }

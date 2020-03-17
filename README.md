@@ -518,3 +518,17 @@ ovrt.onMessageReceived(message)
 ```
 
 `message` is a string containing the data sent by [`ovrt.broadcast`](#broadcast-to-all-web-windows) or [`ovrt.sendMessage`](#send-to-a-specific-web-window).
+
+### Error Thrown
+```javascript
+ovrt.onLogError(errorData)
+```
+
+This function is called if [`ovrt.setupLogging`](#setup-logging) was used to overried the windows logging outputs. `errorData` is an object that contains the data about the error that occured
+
+### Console Log
+```javascript
+ovrt.onLogError(message)
+```
+
+This function is called if [`ovrt.setupLogging`](#setup-logging) was used to overried the windows logging outputs. `message` is a string that contains the contents of any calls to `console.log`.

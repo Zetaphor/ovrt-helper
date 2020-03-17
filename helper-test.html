@@ -4,6 +4,11 @@
     <meta charset="utf-8">
     <title>Lib Helper Test</title>
     <style>
+      body {
+        background-color: white;
+        color: black;
+      }
+
       #logOutput {
         margin-bottom: 10px;
       }
@@ -37,37 +42,39 @@
     <button onclick="createDesktop">Create Desktop Window</button>
     <!-- <button>Create Application Window</button> -->
     <script>
-      function createWeb () {
-        window.ovrt.createWebWin('duckduckgo.com', 1024, 768)
-      }
+      (function () {
+        function createWeb () {
+          window.ovrt.createWebWin('duckduckgo.com', 1024, 768)
+        }
 
-      function createDesktop () {
-        window.ovrt.createDesktopWin(0)
-      }
+        function createDesktop () {
+          window.ovrt.createDesktopWin(0)
+        }
 
-      window.ovrt.onWinOpened = function (uid) {
-        console.log('Captured window open', uid)
-      }
+        window.ovrt.onWinOpened = function (uid) {
+          console.log('Captured window open', uid)
+        }
 
-      window.ovrt.onWinClosed = function (uid) {
-        console.log('Captured window closed', uid)
-      }
+        window.ovrt.onWinClosed = function (uid) {
+          console.log('Captured window closed', uid)
+        }
 
-      window.ovrt.onWinInteractionChanged = function (isInteracting) {
-        console.log('Captured interaction change', isInteracting)
-      }
+        window.ovrt.onWinInteractionChanged = function (isInteracting) {
+          console.log('Captured interaction change', isInteracting)
+        }
 
-      window.ovrt.onMessageReceived = function (message) {
-        console.log('Captured message received', message)
-      }
+        window.ovrt.onMessageReceived = function (message) {
+          console.log('Captured message received', message)
+        }
 
-      window.ovrt.onWinTitlesUpdated = function (titles) {
-        console.log('Captured title update', titles)
-      }
+        window.ovrt.onWinTitlesUpdated = function (titles) {
+          console.log('Captured title update', titles)
+        }
 
-      window.ovrt.setup('#logOutput')
-      console.log('Console log test')
-      window.ovrt.setTitlesUpdateFlag(true)
+        window.ovrt.setup('#logOutput')
+        console.log('Console log test')
+        window.ovrt.setTitlesUpdateFlag(true)
+      })()
     </script>
   </body>
 </html>

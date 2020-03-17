@@ -86,6 +86,8 @@ window.ovrt = {
   onWinInteractionChanged: function (isInteracting) { console.log('WinInteractionChanged', isInteracting) },
   onMessageReceived: function (message) { console.log('MessageReceived', message) },
   onWinTitlesUpdated: function (titles) { console.log('WinTitlesUpdated', titles) },
+  onLogError: function (errorData) { console.error('LoggedError', errorData) },
+  onLog: function (logData) { console.info('ConsoleLog', logData) },
 
   /**
    * Broadcast a message to all open browser instances

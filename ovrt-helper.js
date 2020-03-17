@@ -331,7 +331,8 @@ window.ovrt = {
     this.requestWinSpawn(this.winTypes.window, windowHandle, callback, data)
   },
 
-  setup: function () {
+  setup: function (selector) {
+    this.setupLogging(selector)
     GetMonitorCount('ovrtMonitorTotal')
   },
 

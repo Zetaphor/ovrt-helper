@@ -10,6 +10,7 @@ Rename references to `transform` to `details`
 
 ## **Table Of Contents**
 * [Methods](#methods)
+  * [Setup](#setup)
   * [Creating Windows](#creating-windows)
     * [Web Window](#web-window)
     * [Desktop Window](#desktop-window)
@@ -56,6 +57,17 @@ Rename references to `transform` to `details`
 
 
 ## Methods
+
+### Setup
+```javascript
+ovrt.setup(selector)
+```
+
+This function calls [`ovrt.setupLogging(selector)`](#setup-logging) and populates the value of [`ovrt.totalMonitors`](#total-monitors)
+
+Argument | Type | Description
+-------- | ---- | -----------
+selector | String | A valid HTML selector
 
 ### Creating Windows
 This library abstracts the window creation process with type-specific helper functions that accept a function definition for a callback instead of a string. These functions will also accept a data object that will be passed to the callback as a final parameter.
@@ -305,7 +317,7 @@ enable | Boolean | Whether to allow window move/resize updates
 
 ### Setup Logging
 
-This library includes logging functions that will override the windows console.log method and error handlers and redirects their output to a DOM element. This means you can write regular console.log commands and the output of that and any errors will be appended to the innerHTML of the element you specify.
+This library includes logging functions that will override the windows `console.log` method and error handlers and redirects their output to a DOM element. This means you can write regular `console.log` commands and the output of that and any errors will be appended to the `innerHTML` of the element you specify.
 
 ```javascript
 ovrt.setupLogging(selector)

@@ -528,7 +528,7 @@ This function is called if [`ovrt.setupLogging`](#setup-logging) was used to ove
 
 ### Console Log
 ```javascript
-ovrt.onLogError(message)
+ovrt.onLog(message)
 ```
 
 This function is called if [`ovrt.setupLogging`](#setup-logging) was used to overried the windows logging outputs. `message` is a string that contains the contents of any calls to `console.log`.

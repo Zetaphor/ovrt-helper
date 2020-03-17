@@ -3,6 +3,7 @@
 This library wraps the OVR Toolkit API and provides properties and helper methods to make accessing and controlling windows easier. This script will only work when executed within a Custom App browser window in OVR Toolkit.
 
 TODO: Add note on request flow in library/OVR Toolkit
+Rename references to `transform` to `details`
 
 
 #### **[OVR Toolkit Custom Apps Wiki Page](http://wiki.ovrtoolkit.co.uk/index.php?title=CustomApps)**
@@ -29,6 +30,7 @@ TODO: Add note on request flow in library/OVR Toolkit
     * [Get Monitor Count](#get-monitor-count)
     * [Get Window Titles](#get-window-titles)
   * [Enable/Disable Updates](#enabledisable-updates)
+  * [Setup Logging](#setup-logging)
 * [Properties](#properties)
   * [Data Properties](#data-properties)
     * [Total Monitors](#total-monitors)
@@ -300,6 +302,18 @@ Updates the value of [`ovrt.updateWindows`](#window-moveresize-updates). When se
 Argument | Type | Description
 -------- | ---- | -----------
 enable | Boolean | Whether to allow window move/resize updates
+
+### Setup Logging
+
+This library includes logging functions that will override the windows console.log method and error handlers and redirects their output to a DOM element. This means you can write regular console.log commands and the output of that and any errors will be appended to the innerHTML of the element you specify.
+
+```javascript
+ovrt.setupLogging(selector)
+```
+
+Argument | Type | Description
+-------- | ---- | -----------
+selector | String | A valid HTML selector
 
 ## Properties
 The following properties are available for reading the state of the OVR Toolkit settings or window update toggles.

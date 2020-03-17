@@ -2,7 +2,6 @@ function ovrtWinSpawned (uid) { window.ovrt.completeWinSpawn(uid) }
 function ovrtWinDetailed (details) { window.ovrt.completeWinDetails(details) }
 function ovrtWinTitles (titles) { window.ovrt.completeWindowTitles(titles) }
 
-GetMonitorCount('ovrtMonitorTotal')
 function ovrtMonitorTotal (total) { window.ovrt.totalMonitors = total }
 
 let titleTimeout = -1
@@ -68,6 +67,8 @@ window.ovrt = {
   fingerCurls: {},
   winTitles: {},
   deviceInfo: {},
+  logOutputEl: null,
+  oldConsoleLog: null,
 
   updateFingers: false,
   updateTitles: false,
@@ -329,4 +330,30 @@ window.ovrt = {
   createWin: function (windowHandle, callback, data) {
     this.requestWinSpawn(this.winTypes.window, windowHandle, callback, data)
   },
+
+  setup: function () {
+    GetMonitorCount('ovrtMonitorTotal')
+  },
+
+  setupLogging: function (selector) {
+    this.logOutputEl = document.querySelector(selector)
+    window.onerror = this.logError
+    console.log = function (message) {
+      let today = new Date()
+      let time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}:${today.getMilliseconds()}`
+      window.ovrt.addLogLine(`<p class="console-item log-item"><span class="timestamp">${time}</span> <span class="prefix">[LOG]</span>&nbsp;<span class="message">${message}</span></p>`)
+    }
+  },
+
+  logError: function (errorMsg, url, lineNumber) {
+    let today = new Date()
+    let time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}:${today.getMilliseconds()}`
+    window.ovrt.addLogLine(`<p class="error-item log-item"><span class="timestamp">${time}</span> <span class="prefix">[ERROR]</span> <span class="message">${errorMsg}</span> - <span class="lineNumber">L${lineNumber}</span> - <span class="url">${url}</span></p>`)
+    return true
+  },
+
+  addLogLine: function (data) {
+    if (typeof data === 'object') data = JSON.stringify(data)
+    this.logOutputEl.innerHTML += data
+  }
 }

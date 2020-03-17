@@ -3,14 +3,43 @@
   <head>
     <meta charset="utf-8">
     <title>Lib Helper Test</title>
+    <style>
+      #logOutput {
+        margin-bottom: 10px;
+      }
+
+      .log-item {
+        margin: 1px 0 1px 0;
+      }
+
+      .log-item:last-of-type {
+        border-bottom: none;
+      }
+
+      .prefix {
+        font-weight: bold;
+      }
+
+      .error-item > .prefix {
+        color: red;
+      }
+
+      .timestamp {
+        font-size: 0.8em;
+      }
+    </style>
   </head>
   <body>
-    <div id="output"></div>
+    <div id="logOutput"></div>
     <button onclick="createWeb">Create Web Window</button>
     <button onclick="createDesktop">Create Desktop Window</button>
     <!-- <button>Create Application Window</button> -->
-    <script src="ovrt-helper-lib.js"></script>
+    <script src="ovrt-helper.js"></script>
     <script>
+      window.ovrt.setupLogging('#logOutput')
+      console.log('Console log test')
+      window.ovrt.setup()
+
       function createWeb () {
         window.ovrt.createWebWin('duckduckgo.com', 1024, 768)
       }

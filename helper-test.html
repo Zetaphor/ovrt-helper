@@ -11,6 +11,7 @@
 
       #logOutput {
         margin-bottom: 10px;
+        max-height:
       }
 
       .log-item {
@@ -69,6 +70,16 @@
 
         window.ovrt.onWinTitlesUpdated = function (titles) {
           console.log('Captured title update', titles)
+        }
+
+        window.onLog = function (message) {
+          console.info('Captured log', message)
+          window.ovrt.logOutputEl.scrollTop = window.ovrt.logOutputEl.scrollHeight
+        }
+
+        window.onLogError = function (error) {
+          console.info('Captured error', error)
+          window.ovrt.logOutputEl.scrollTop = window.ovrt.logOutputEl.scrollHeight
         }
 
         window.ovrt.setup('#logOutput')

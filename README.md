@@ -11,6 +11,7 @@ Rename references to `transform` to `details`
 ## **Table Of Contents**
 * [Methods](#methods)
   * [Setup](#setup)
+  * [Setup Logging](#setup-logging)
   * [Creating Windows](#creating-windows)
     * [Web Window](#web-window)
     * [Desktop Window](#desktop-window)
@@ -31,7 +32,6 @@ Rename references to `transform` to `details`
     * [Get Monitor Count](#get-monitor-count)
     * [Get Window Titles](#get-window-titles)
   * [Enable/Disable Updates](#enabledisable-updates)
-  * [Setup Logging](#setup-logging)
 * [Properties](#properties)
   * [Data Properties](#data-properties)
     * [Total Monitors](#total-monitors)

@@ -80,6 +80,30 @@ Argument | Type | Description
 -------- | ---- | -----------
 selector | String | A valid HTML selector
 
+
+**Example Output:**
+```html
+<!-- console.log -->
+<p class="console-item log-item">
+  <span class="timestamp">12:46:26:160</span>&nbsp;
+  <span class="prefix">[LOG]</span>&nbsp;
+  <span class="message">Console log test</span>
+</p>
+
+<!-- Error output -->
+<p class="error-item log-item">
+  <span class="timestamp">${time}</span>&nbsp;
+  <span class="prefix">[ERROR]</span>&nbsp;
+  <span class="message">${errorMsg}</span>
+  &nbsp;-&nbsp;
+  <span class="lineNumber">L${lineNumber}</span>
+  &nbsp;-&nbsp;
+  <span class="url">${url}</span>
+</p>
+```
+
+
+
 ### Creating Windows
 This library abstracts the window creation process with type-specific helper functions that accept a function definition for a callback instead of a string. These functions will also accept a data object that will be passed to the callback as a final parameter.
 

@@ -28,18 +28,15 @@
         font-size: 0.8em;
       }
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="ovrt-helper.js"></script>
   </head>
   <body>
     <div id="logOutput"></div>
     <button onclick="createWeb">Create Web Window</button>
     <button onclick="createDesktop">Create Desktop Window</button>
     <!-- <button>Create Application Window</button> -->
-    <script src="ovrt-helper.js"></script>
     <script>
-      window.ovrt.setup('#logOutput')
-      console.log('Console log test')
-
-
       function createWeb () {
         window.ovrt.createWebWin('duckduckgo.com', 1024, 768)
       }
@@ -67,6 +64,10 @@
       window.ovrt.onWinTitlesUpdated = function (titles) {
         console.log('Captured title update', titles)
       }
+
+      window.ovrt.setup('#logOutput')
+      console.log('Console log test')
+      window.ovrt.setTitlesUpdateFlag(true)
     </script>
   </body>
 </html>

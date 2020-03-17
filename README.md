@@ -157,7 +157,7 @@ type | Number | A window type as defined in [`ovrt.winTypes`](#window-types)
 contents | Any | This window contents, can be OVRWebContents or Number
 callback | Function | A function definition to callback once the window is created | True
 data | Any | This value will be passed as a second parameter to the callback after the window uid | True
-transform | Object | This object will be passed to the callback along with the window uid | True
+transform | Object | A transform to create the window with, if undefined then [`ovrt.newTransform`](#new-transform) is used | True
 
 
 ### Using Windows

@@ -54,7 +54,7 @@ Rename references to `transform` to `details`
   * [Window Closed](#window-closed)
   * [Window Mouse Enter/Leave](#window-mouse-enterleave)
   * [Message Received](#message-received)
-
+* [Notes](#notes)
 
 ## Methods
 
@@ -532,3 +532,7 @@ ovrt.onLog(message)
 ```
 
 This function is called if [`ovrt.setupLogging`](#setup-logging) was used to overried the windows logging outputs. `message` is a string that contains the contents of any calls to `console.log`.
+
+## Notes
+
+* When using Virtual Desktop with Chrome remote debugger: It seems that after a while of taking the headset off VD returns control of the audio device to the PC. It also appears to be suspending input from SteamVR, which makes the OVRT functions no longer bound to the window object on a reload in the Chrome debugger. The fix is to just put on the headset and reload the page. This seems to happen even if the "suspend input on idle" setting is disabled in SteamVR.

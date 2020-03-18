@@ -321,6 +321,7 @@ window.ovrt = {
    * @param { Function } callback
    */
   createDesktopWin: function (monitorId, callback, data) {
+    console.log('Called craete desktop win')
     this.requestWinSpawn(this.winTypes.desktop, monitorId, callback, data)
   },
 
@@ -345,6 +346,7 @@ window.ovrt = {
       let today = new Date()
       let time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}:${today.getMilliseconds()}`
       window.ovrt.addLogLine(`<p class="console-item log-item"><span class="timestamp">${time}</span> <span class="prefix">[LOG]</span>&nbsp;<span class="message">${message}</span></p>`)
+      window.ovrt.onLog(message)
     }
   },
 
@@ -352,6 +354,11 @@ window.ovrt = {
     let today = new Date()
     let time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}:${today.getMilliseconds()}`
     window.ovrt.addLogLine(`<p class="error-item log-item"><span class="timestamp">${time}</span> <span class="prefix">[ERROR]</span> <span class="message">${errorMsg}</span> - <span class="lineNumber">L${lineNumber}</span> - <span class="url">${url}</span></p>`)
+    window.ovrt.onLogError({
+      message: errorMsg,
+      url: url,
+      lineNumber: lineNumber
+    })
     return true
   },
 

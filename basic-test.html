@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Basic test</title>
+  </head>
+  <body>
+    <button onclick="createWin()">Create Web Window</button>
+    <script>
+      function createWin () {
+        let newTransform = {
+          posX: 0.0,
+          posY: 0.0,
+          posZ: 0.0,
+          rotX: 0.0,
+          rotY: 0.0,
+          rotZ: 0.0,
+          size: 0.25, // Meters
+          opacity: 1.0,
+          curvature: 0.0,
+          framerate: 60,
+          ecoMode: true,
+          lookHiding: false,
+          attachedDevice: 0,
+          shouldSave: false
+        }
+        SpawnOverlay(JSON.stringify(newTransform), 'ovrtWinSpawned')
+      }
+
+      window.ovrtWinSpawned = function (uid) { console.info('ovrtSpawned'); window.ovrt.completeWinSpawn(uid) }
+
+      window.ovrt = {
+        completeWinSpawn: function (uid) {
+          console.log('Complete Spawn', uid)
+          // document.getElementById("uid").innerHTML = uid;
+        }
+      }
+    </script>
+  </body>
+</html>

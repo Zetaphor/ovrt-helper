@@ -5,13 +5,15 @@
     <title>Lib Helper Test</title>
     <link rel="stylesheet" href="helper-test.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="ovrt-helper.js"></script>
   </head>
   <body>
+    <a href="curtis-test.html">Curtis Test</a><br />
+    <a href="basic-test.html">Basic Test</a>
     <div id="logOutput"></div>
     <button onclick="createWeb()">Create Web Window</button>
     <button onclick="createDesktop()">Create Desktop Window</button>
     <!-- <button>Create Application Window</button> -->
+    <script src="ovrt-helper.js"></script>
     <script>
       function createWeb () {
         window.ovrt.createWebWin('duckduckgo.com', 1024, 768)
@@ -30,7 +32,7 @@
       }
 
       window.ovrt.onWinInteractionChanged = function (isInteracting) {
-        console.log('Captured interaction change', isInteracting)
+        // console.log('Captured interaction change', isInteracting)
       }
 
       window.ovrt.onMessageReceived = function (message) {
@@ -42,16 +44,17 @@
       }
 
       window.ovrt.onLog = function (message) {
-        console.info('Captured log', message)
+        console.debug(message)
         window.ovrt.logOutputEl.scrollTop = window.ovrt.logOutputEl.scrollHeight
       }
 
       window.ovrt.onLogError = function (error) {
-        console.info('Captured error', error)
+        console.debug('Error', error)
         window.ovrt.logOutputEl.scrollTop = window.ovrt.logOutputEl.scrollHeight
       }
 
-      window.ovrt.setup('#logOutput')
+      // window.ovrt.setup('#logOutput')
+      window.ovrt.setupLogging('#logOutput')
       console.log('Console log test')
       // window.ovrt.setTitlesUpdateFlag(true)
     </script>

@@ -1,7 +1,6 @@
 function ovrtWinSpawned (uid) { window.ovrt.completeWinSpawn(uid) }
 function ovrtWinDetailed (details) { window.ovrt.completeWinDetails(details) }
 function ovrtWinTitles (titles) { window.ovrt.completeWindowTitles(titles) }
-
 function ovrtMonitorTotal (total) { window.ovrt.totalMonitors = total }
 
 let titleTimeout = -1
@@ -131,13 +130,13 @@ window.ovrt = {
     if (typeof shouldSave === 'undefined') shouldSave = false
     if (typeof broadcast === 'undefined') broadcast = true
     if (typeof transform === 'undefined') transform = this.newTransform
-    this.windowQueue.push({
+    window.ovrt.spawnQueue.push({
       type: type,
       contents: contents,
       callback: callback,
       transform: transform
     })
-    SpawnOverlay(JSON.stringify(transform), 'ovrtWinSpawned', data)
+    window.SpawnOverlay(JSON.stringify(transform), 'ovrtWinSpawned', data)
   },
 
   /**
@@ -145,7 +144,9 @@ window.ovrt = {
    * @param { Number } uid
    */
   completeWinSpawn: function (uid, data) {
+    console.log('Completed dsadsadsa')
     let winData = this.spawnQueue.shift()
+    console.info('Window spawn', uid, winData)
     window.SetContents(uid, winData.type, winData.contents)
     windowData.uid = uid
     if (typeof winData.callback === 'function') winData['callback'](winData, data)
@@ -321,7 +322,6 @@ window.ovrt = {
    * @param { Function } callback
    */
   createDesktopWin: function (monitorId, callback, data) {
-    console.log('Called craete desktop win')
     this.requestWinSpawn(this.winTypes.desktop, monitorId, callback, data)
   },
 

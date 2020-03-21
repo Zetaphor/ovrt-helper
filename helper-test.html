@@ -5,17 +5,24 @@
     <title>Lib Helper Test</title>
     <link rel="stylesheet" href="helper-test.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <style>
+      button {
+        margin: 3px;
+      }
+    </style>
   </head>
   <body>
     <a href="curtis-test.html">Curtis Test</a><br />
     <a href="basic-test.html">Basic Test</a>
     <div id="logOutput"></div>
-    <button onclick="createWeb()">Create Web Window</button><br />
+    <button onclick="createWeb()">Create Web Window</button>
     <button onclick="createDesktop()">Create Desktop Window</button><br />
+
     <button onclick="getWinTitles()">Get Window Titles (Broken)</button><br />
     <label for="uid">UID:</label>
-    <input type="text" id="uid">
-    <button onclick="getWinDetails()">Get Window Details</button><br />
+    <input type="text" id="uid"><br />
+    <button onclick="getWinDetails()">Get Window Details</button>
+    <button onclick="getWinBounds()">Get Window Bounds (Broken)</button><br />
     <!-- <button>Create Application Window</button> -->
     <script src="ovrt-helper.js"></script>
     <script>
@@ -39,6 +46,16 @@
         window.ovrt.requestWinDetails(Number(uid), function (details) {
           console.log('Final transform', details)
         })
+      }
+
+      function getWinBounds () {
+        let uid = document.getElementById('uid').value
+        console.log('Request winBounds', uid)
+        window.ovrt.getWinBounds(uid, 'gotWinBounds')
+      }
+
+      function gotWinBounds (winBounds) {
+        console.log('Window bounds', winBounds)
       }
 
       window.ovrt.onWinOpened = function (uid) {

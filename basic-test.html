@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <title>Basic test</title>
   </head>
-  <body>
-    <p>UID: <span id="uid"></span></p>
+  <body style="background: white;">
+    <p style="color:black;">UID: <span id="uid"></span></p>
     <button onclick="createWin()">Create Window</button>
-    <button onclick="getTransform()">Get Transform</button>
+    <button onclick="getBounds()">Get Bounds</button>
     <script>
       function createWin (titles) {
         var overlayTransform = {
@@ -34,14 +34,14 @@
         console.log('ovrtWinSpawned', uid)
       }
 
-      function getTransform() {
+      function getBounds() {
         var uid = document.getElementById("uid").innerHTML
-        console.log('Get Transform', uid)
-        GetOverlayTransform(uid, 'gotTransform')
+        console.log('Get Bounds', uid)
+        GetOverlayBounds(uid, 'gotBounds')
       }
 
-      function gotTransform (transform) {
-        console.log('Got transform', transform)
+      function gotBounds (bounds) {
+        console.log('Got bounds', bounds)
       }
     </script>
   </body>

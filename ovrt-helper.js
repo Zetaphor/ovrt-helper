@@ -244,8 +244,8 @@ window.ovrt = {
    * @param { Number } uid
    * @param { String } callback
    */
-  getWinBounds: function (uid, callback, data) {
-    window.GetOverlayBounds(uid, callback, data)
+  getWinBounds: function (uid, callback) {
+    window.GetOverlayBounds(uid, callback)
   },
 
   /**

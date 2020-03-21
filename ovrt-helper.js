@@ -243,6 +243,15 @@ window.ovrt = {
   },
 
   /**
+   * Get the window type
+   * @param { Number } uid
+   * @param { Function } callback
+   */
+  getWinType: function (uid, callback) {
+    window.GetOverlayType(uid, callback)
+  },
+
+  /**
    * Set a windows position
    * @param { Number } uid
    * @param { Object } pos

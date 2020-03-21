@@ -19,6 +19,7 @@ Rename references to `transform` to `details`
     * [Spawn Window](#spawn-window)
   * [Using Windows](#using-windows)
     * [Get Window Details](#get-window-details)
+    * [Get Window Type](#get-window-type)
     * [Close Window](#close-window)
     * [Refresh Web Window](#refresh-web-window)
     * [Get Window Boundaries](#get-window-boundaries)
@@ -174,6 +175,19 @@ Argument | Type | Description | Optional
 uid | Number | The uid of the window to get a transform for
 callback | Function | A function definition to callback once the window is created
 data | Any | This value will be passed as a second parameter to the callback after the window details | True
+
+#### Get Window Type
+```javascript
+ovrt.getWinType(uid, callback, data)
+```
+
+Makes a request to OVR Toolkit for a windows [overlay type](http://wiki.ovrtoolkit.co.uk/index.php?title=CustomApps#Types).
+
+Argument | Type | Description | Optional
+-------- | ---- | ----------- | --------
+uid | Number | The uid of the window to get a type for
+callback | Function | A function definition to callback with the window type
+data | Any | This value will be passed as a second parameter to the callback after the window type | True
 
 #### Close Window
 ```javascript

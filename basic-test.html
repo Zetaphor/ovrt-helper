@@ -7,7 +7,8 @@
   <body style="background: white;">
     <p style="color:black;">UID: <span id="uid"></span></p>
     <button onclick="createWin()">Create Window</button>
-    <button onclick="getBounds()">Get Bounds</button>
+    <button onclick="broadcastMsg()">Broadcast Message</button>
+    <button onclick="sendMsg()">Send Message</button>
     <script>
       function createWin (titles) {
         var overlayTransform = {
@@ -34,14 +35,16 @@
         console.log('ovrtWinSpawned', uid)
       }
 
-      function getBounds() {
-        var uid = document.getElementById("uid").innerHTML
-        console.log('Get Bounds', uid)
-        GetOverlayBounds(uid, 'gotBounds')
+      function broadcastMsg () {
+
       }
 
-      function gotBounds (bounds) {
-        console.log('Got bounds', bounds)
+      function sendMsg () {
+        var uid = document.getElementById("uid").innerHTML
+      }
+
+      function ReceiveMessage (message) {
+        console.info('got message')
       }
     </script>
   </body>

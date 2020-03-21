@@ -27,10 +27,13 @@
     <button onclick="setPostion()">Set Position</button>
     <button onclick="setRotation()">Set Rotation</button>
     <button onclick="setSetting()">Set Setting</button>
+    <br />
+    <button onclick="broadcastMessage()">Broadcast Message</button>
+    <button onclick="sendMessage()">Send Message</button>
     <script src="ovrt-helper.js"></script>
     <script>
       function createWeb () {
-        window.ovrt.createWebWin('duckduckgo.com', 1024, 768)
+        window.ovrt.createWebWin('http://localhost:8000/helper-test.html', 1024, 768)
       }
 
       function createDesktop () {
@@ -91,6 +94,22 @@
         let uid = document.getElementById('uid').value
         console.log('Set setting', uid)
         ovrt.setWinSetting(uid, ovrt.winSettings.curvature, 1.0)
+      }
+
+      function broadcastMessage () {
+        console.log('Broadcast message')
+        window.ovrt.broadcastMessage('broadTestEvent', {
+          test: 'wee'
+        })
+      }
+
+      function sendMessage () {
+        let uid = document.getElementById('uid').value
+        console.log('Send message')
+        window.ovrt.sendMessage('sendEvent', {
+          dsadsa: 12312,
+          ds: 'sss'
+        }, 999, uid)
       }
 
       window.ovrt.onWinOpened = function (uid) {

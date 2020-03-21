@@ -16,7 +16,7 @@ function completeFingerCurls (curls) { window.ovrt.fingerCurls = curls }
 function DevicePositionUpdate (deviceInfo) { if (window.ovrt.updateDeviceInfo) window.ovrt.deviceInfo = deviceInfo }
 function OverlayTransformChanged (updateData) { if (window.ovrt.updateWindows) window.ovrt.onWinTransformChanged(updateData) }
 function InteractionStateChanged (isInteracting) { window.ovrt.onWinInteractionChanged(isInteracting) }
-function ReceiveMessage (message) { window.ovrt.onMessageReceived(message) }
+function ReceiveMessage (message) { console.info('got message'); window.ovrt.onMessageReceived(message) }
 function OverlayOpened (uid) { window.ovrt.onWinOpened(uid) }
 function OverlayClosed (uid) { window.ovrt.onWinClosed(uid) }
 

@@ -1,12 +1,18 @@
-function ovrtWinSpawned (uid) { window.ovrt.completeWinSpawn(uid) }
+/**
+ * For whatever reason now this callback is working. I was thinking it wouldn't if the helper-test overrode
+ * the onWindowOpened funciton, but that doesn't seem to be the case. One way to permafix it is to just
+ * use the onWindowOpened function as the method to call completeWindowSpawn and then have completeWindowSpawn call onWindowOpened
+ */
+
+window.ovrtWinSpawned = function (uid) { window.ovrt.completeWinSpawn(uid) }
 function ovrtWinDetailed (details) { window.ovrt.completeWinDetails(details) }
 function ovrtWinTitles (titles) { window.ovrt.completeWindowTitles(titles) }
 function ovrtMonitorTotal (total) { window.ovrt.totalMonitors = total }
 
 let titleTimeout = -1
 let titleTimeoutInterval = 5000
-function requestIntervalWindowTitles () { window.GetWindowTitles('completeIntervalWinTitles') }
-function completeIntervalWinTitles (titles) { window.ovrt.winTitles = titles; window.ovrt.onWinTitlesUpdated(titles) }
+function requestIntervalWindowTitles () { if (typeof window.GetWindowTitles === 'function') window.GetWindowTitles('completeIntervalWinTitles') }
+function completeIntervalWinTitles (titles) { console.log('Titles updated'); window.ovrt.winTitles = titles; window.ovrt.onWinTitlesUpdated(titles) }
 
 let fingersTimeout = -1
 let fingerTimeoutInterval = 1000
@@ -80,7 +86,7 @@ window.ovrt = {
 
   // Override these with your own functions
   onWinTransformChanged: function (transformUpdate) { console.log('WinTransformChanged', transformUpdate) },
-  onWinOpened: function (uid) { console.log('WindowOpened', uid) },
+  onWinOpened: function (uid) { console.log('LocalWindowOpened', uid) },
   onWinClosed: function (uid) { console.log('WindowClosed', uid) },
   onWinInteractionChanged: function (isInteracting) { console.log('WinInteractionChanged', isInteracting) },
   onMessageReceived: function (message) { console.log('MessageReceived', message) },
@@ -136,7 +142,8 @@ window.ovrt = {
       callback: callback,
       transform: transform
     })
-    window.SpawnOverlay(JSON.stringify(transform), 'ovrtWinSpawned', data)
+
+    window.SpawnOverlay(JSON.stringify(transform), 'ovrtWinSpawned')
   },
 
   /**
@@ -144,12 +151,15 @@ window.ovrt = {
    * @param { Number } uid
    */
   completeWinSpawn: function (uid, data) {
-    console.log('Completed dsadsadsa')
     let winData = this.spawnQueue.shift()
-    console.info('Window spawn', uid, winData)
-    window.SetContents(uid, winData.type, winData.contents)
+    let normalizedContents = winData.contents
+    if (typeof winData.contents === 'object') normalizedContents = JSON.stringify(winData.contents)
+    else normalizedContents = String(normalizedContents)
+    let stringContents = JSON.stringify(winData.contents)
+    window.SetContents(String(uid), Number(winData.type), normalizedContents)
     windowData.uid = uid
     if (typeof winData.callback === 'function') winData['callback'](winData, data)
+    this.onWinOpened()
   },
 
   /**
@@ -194,7 +204,7 @@ window.ovrt = {
       callback: callback,
       data: data
     })
-    window.GetWindowTitles('ovrtWinTitles', data)
+    if (typeof window.GetWindowTitles === 'function') window.GetWindowTitles('ovrtWinTitles', data)
   },
 
   /**

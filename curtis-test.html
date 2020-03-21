@@ -73,6 +73,7 @@
           if (document.getElementById("uid").innerHTML == "N/A") {
             return;
           }
+          console.log(document.getElementById("uid").innerHTML, 0, JSON.stringify(webContents))
           SetContents(document.getElementById("uid").innerHTML, 0, JSON.stringify(webContents));
           SetOverlaySetting(document.getElementById("uid").innerHTML, 0, 0.25);
           SetOverlaySetting(document.getElementById("uid").innerHTML, 1, 1);

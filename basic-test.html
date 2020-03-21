@@ -8,6 +8,7 @@
     <button onclick="createWin()">Create Web Window</button>
     <script>
       function createWin () {
+        console.log('Clicked create')
         let newTransform = {
           posX: 0.0,
           posY: 0.0,
@@ -24,9 +25,8 @@
           attachedDevice: 0,
           shouldSave: false
         }
-        SpawnOverlay(JSON.stringify(newTransform), 'ovrtWinSpawned')
+        SpawnOverlay(JSON.stringify(newTransform), 'window.ovrtWinSpawned')
       }
-
       window.ovrtWinSpawned = function (uid) { console.info('ovrtSpawned'); window.ovrt.completeWinSpawn(uid) }
 
       window.ovrt = {

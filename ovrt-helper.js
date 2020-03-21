@@ -1,4 +1,4 @@
-window.ovrtWinSpawned = function (uid) { window.ovrt.completeWinSpawn(uid) }
+// window.ovrtWinSpawned = function (uid) { console.log('spawned'); window.ovrt.completeWinSpawn(uid) }
 window.ovrtWinDetailed = function (details) { window.ovrt.completeWinDetails(details) }
 window.ovrtWinTitles = function (titles) { console.log('Got titles proper'); window.ovrt.completeWindowTitles(titles) }
 window.ovrtMonitorTotal = function (total) { window.ovrt.totalMonitors = total }
@@ -17,7 +17,7 @@ function DevicePositionUpdate (deviceInfo) { if (window.ovrt.updateDeviceInfo) w
 function OverlayTransformChanged (updateData) { if (window.ovrt.updateWindows) window.ovrt.onWinTransformChanged(updateData) }
 function InteractionStateChanged (isInteracting) { window.ovrt.onWinInteractionChanged(isInteracting) }
 function ReceiveMessage (message) { console.info('got message'); window.ovrt.onMessageReceived(message) }
-function OverlayOpened (uid) { window.ovrt.onWinOpened(uid) }
+function OverlayOpened (uid) { window.ovrt.completeWinSpawn(uid) }
 function OverlayClosed (uid) { window.ovrt.onWinClosed(uid) }
 
 window.ovrt = {
@@ -82,7 +82,7 @@ window.ovrt = {
   onWinTransformChanged: function (transformUpdate) { console.log('WinTransformChanged', transformUpdate) },
   onWinOpened: function (uid) { console.log('LocalWindowOpened', uid) },
   onWinClosed: function (uid) { console.log('WindowClosed', uid) },
-  onWinInteractionChanged: function (isInteracting) { console.log('WinInteractionChanged', isInteracting) },
+  // onWinInteractionChanged: function (isInteracting) { console.log('WinInteractionChanged', isInteracting) },
   onMessageReceived: function (message) { console.log('MessageReceived', message) },
   onWinTitlesUpdated: function (titles) { console.log('WinTitlesUpdated', titles) },
   onLog: function (logData) { console.info('ConsoleLog', logData) },

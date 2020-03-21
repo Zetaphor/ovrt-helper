@@ -5,35 +5,43 @@
     <title>Basic test</title>
   </head>
   <body>
-    <button onclick="createWin()">Create Web Window</button>
+    <p>UID: <span id="uid"></span></p>
+    <button onclick="createWin()">Create Window</button>
+    <button onclick="getTransform()">Get Transform</button>
     <script>
-      function createWin () {
-        console.log('Clicked create')
-        let newTransform = {
-          posX: 0.0,
-          posY: 0.0,
-          posZ: 0.0,
-          rotX: 0.0,
-          rotY: 0.0,
-          rotZ: 0.0,
-          size: 0.25, // Meters
-          opacity: 1.0,
-          curvature: 0.0,
-          framerate: 60,
-          ecoMode: true,
-          lookHiding: false,
-          attachedDevice: 0,
-          shouldSave: false
-        }
-        SpawnOverlay(JSON.stringify(newTransform), 'window.ovrtWinSpawned')
+      function createWin (titles) {
+        var overlayTransform = {
+          "posX": 0,
+          "posY": 0,
+          "posZ": 0,
+          "rotX": 0,
+          "rotY": 0,
+          "rotZ": 0,
+          "size": 0.6,
+          "opacity": 0.5,
+          "curvature": 0.15,
+          "framerate": 60,
+          "ecoMode": true,
+          "lookHiding": false,
+          "attachedDevice": 0,
+          "shouldSave": true
+        };
+        SpawnOverlay(JSON.stringify(overlayTransform), "ovrtWinSpawned");
       }
-      window.ovrtWinSpawned = function (uid) { console.info('ovrtSpawned'); window.ovrt.completeWinSpawn(uid) }
 
-      window.ovrt = {
-        completeWinSpawn: function (uid) {
-          console.log('Complete Spawn', uid)
-          // document.getElementById("uid").innerHTML = uid;
-        }
+      function ovrtWinSpawned(uid) {
+        document.getElementById("uid").innerHTML = uid;
+        console.log('ovrtWinSpawned', uid)
+      }
+
+      function getTransform() {
+        var uid = document.getElementById("uid").innerHTML
+        console.log('Get Transform', uid)
+        GetOverlayTransform(uid, 'gotTransform')
+      }
+
+      function gotTransform (transform) {
+        console.log('Got transform', transform)
       }
     </script>
   </body>

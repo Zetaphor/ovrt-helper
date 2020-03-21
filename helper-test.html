@@ -10,11 +10,12 @@
     <a href="curtis-test.html">Curtis Test</a><br />
     <a href="basic-test.html">Basic Test</a>
     <div id="logOutput"></div>
-    <select >
-
-    </select>
-    <button onclick="createWeb()">Create Web Window</button>
-    <button onclick="createDesktop()">Create Desktop Window</button>
+    <button onclick="createWeb()">Create Web Window</button><br />
+    <button onclick="createDesktop()">Create Desktop Window</button><br />
+    <button onclick="getWinTitles()">Get Window Titles (Broken)</button><br />
+    <label for="uid">UID:</label>
+    <input type="text" id="uid">
+    <button onclick="getWinDetails()">Get Window Details</button><br />
     <!-- <button>Create Application Window</button> -->
     <script src="ovrt-helper.js"></script>
     <script>
@@ -24,6 +25,20 @@
 
       function createDesktop () {
         window.ovrt.createDesktopWin(0)
+      }
+
+      function getWinTitles () {
+        console.log('Clicked get titles')
+        window.ovrt.requestWinTitles(function (titles) {
+          console.log('I received', titles)
+        })
+      }
+
+      function getWinDetails () {
+        let uid = document.getElementById('uid').value
+        window.ovrt.requestWinDetails(Number(uid), function (details) {
+          console.log('Final transform', details)
+        })
       }
 
       window.ovrt.onWinOpened = function (uid) {
@@ -59,7 +74,7 @@
       // window.ovrt.setup('#logOutput')
       window.ovrt.setupLogging('#logOutput')
       console.log('Console log test')
-      window.ovrt.setTitlesUpdateFlag(true)
+      // window.ovrt.setTitlesUpdateFlag(true)
     </script>
   </body>
 </html>

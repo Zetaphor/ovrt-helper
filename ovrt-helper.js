@@ -5,8 +5,8 @@
  */
 
 window.ovrtWinSpawned = function (uid) { window.ovrt.completeWinSpawn(uid) }
-function ovrtWinDetailed (details) { window.ovrt.completeWinDetails(details) }
-function ovrtWinTitles (titles) { window.ovrt.completeWindowTitles(titles) }
+window.ovrtWinDetailed = function (details) { window.ovrt.completeWinDetails(details) }
+window.ovrtWinTitles = function (titles) { console.log('Got titles proper'); window.ovrt.completeWindowTitles(titles) }
 function ovrtMonitorTotal (total) { window.ovrt.totalMonitors = total }
 
 let titleTimeout = -1
@@ -140,6 +140,7 @@ window.ovrt = {
       type: type,
       contents: contents,
       callback: callback,
+      data: data,
       transform: transform
     })
 
@@ -150,7 +151,7 @@ window.ovrt = {
    * Process a window uid returned from SpawnOverlay
    * @param { Number } uid
    */
-  completeWinSpawn: function (uid, data) {
+  completeWinSpawn: function (uid) {
     let winData = this.spawnQueue.shift()
     let normalizedContents = winData.contents
     if (typeof winData.contents === 'object') normalizedContents = JSON.stringify(winData.contents)
@@ -158,7 +159,7 @@ window.ovrt = {
     let stringContents = JSON.stringify(winData.contents)
     window.SetContents(String(uid), Number(winData.type), normalizedContents)
     windowData.uid = uid
-    if (typeof winData.callback === 'function') winData['callback'](winData, data)
+    if (typeof winData.callback === 'function') winData.callback(uid, winData.data)
     this.onWinOpened()
   },
 
@@ -171,9 +172,10 @@ window.ovrt = {
   requestWinDetails: function (uid, callback, data) {
     this.detailsQueue.push({
       uid: uid,
-      callback: callback
+      callback: callback,
+      data: data
     })
-    window.GetOverlayTransform(uid, 'ovrtWinDetailed', data)
+    window.GetOverlayTransform(String(uid), 'ovrtWinDetailed')
   },
 
   /**
@@ -181,9 +183,9 @@ window.ovrt = {
    * @param { Object } winTransform
    */
   completeWinDetails: function (winTransform) {
+    console.log('Completed win details')
     let winData = this.detailsQueue.shift()
-    this.winData.transform = details
-    if (typeof winData.callback === 'function') winData['callback'](winData, data)
+    if (typeof winData.callback === 'function') winData.callback(winTransform, winData.data)
   },
 
   /**
@@ -204,7 +206,8 @@ window.ovrt = {
       callback: callback,
       data: data
     })
-    if (typeof window.GetWindowTitles === 'function') window.GetWindowTitles('ovrtWinTitles', data)
+    console.log('Get titles')
+    window.GetWindowTitles('ovrtWinTitles')
   },
 
   /**
@@ -212,11 +215,12 @@ window.ovrt = {
    * @param { Object } titles
    * @param { String } data
    */
-  completeWindowTitles: function (titles, data) {
+  completeWindowTitles: function (titles) {
+    console.log('Complete titles')
     let titleData = this.titlesQueue.shift()
     this.winTitles = titles
     this.onWinTitlesUpdated(titles)
-    if (typeof titleData.callback === 'function') titleData['callback'](titles, data)
+    if (typeof titleData.callback === 'function') titleData.callback(titles, titleData.data)
   },
 
   /**
@@ -352,7 +356,13 @@ window.ovrt = {
   setupLogging: function (selector) {
     this.logOutputEl = document.querySelector(selector)
     window.onerror = this.logError
-    console.log = function (message) {
+    console.log = function () {
+      let message = ''
+      for (let i = 0; i < arguments.length; i++) {
+        if (typeof arguments[i] === 'object') message += `${JSON.stringify(arguments[i])}, `
+        else message += `${String(arguments[i])}, `
+      }
+      message = message.substring(0, message.length - 2)
       let today = new Date()
       let time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}:${today.getMilliseconds()}`
       window.ovrt.addLogLine(`<p class="console-item log-item"><span class="timestamp">${time}</span> <span class="prefix">[LOG]</span>&nbsp;<span class="message">${message}</span></p>`)

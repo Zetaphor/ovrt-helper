@@ -17,13 +17,16 @@
     <div id="logOutput"></div>
     <button onclick="createWeb()">Create Web Window</button>
     <button onclick="createDesktop()">Create Desktop Window</button><br />
-
     <button onclick="getWinTitles()">Get Window Titles (Broken)</button><br />
+    <br />
     <label for="uid">UID:</label>
     <input type="text" id="uid"><br />
     <button onclick="getWinDetails()">Get Window Details</button>
     <button onclick="getWinBounds()">Get Window Bounds (Broken)</button><br />
-    <!-- <button>Create Application Window</button> -->
+    <button onclick="refreshWindow()">Refresh Window</button>
+    <button onclick="setPostion()">Set Position</button>
+    <button onclick="setRotation()">Set Rotation</button>
+    <button onclick="setSetting()">Set Setting</button>
     <script src="ovrt-helper.js"></script>
     <script>
       function createWeb () {
@@ -58,8 +61,41 @@
         console.log('Window bounds', winBounds)
       }
 
+      function refreshWindow () {
+        let uid = document.getElementById('uid').value
+        console.log('Refresh window', uid)
+        window.ovrt.refreshWin(uid)
+      }
+
+      function setPostion () {
+        let uid = document.getElementById('uid').value
+        console.log('Set position', uid)
+        window.ovrt.setWinPosition(uid, {
+          x: 1,
+          y: 1,
+          z: 1
+        })
+      }
+
+      function setRotation () {
+        let uid = document.getElementById('uid').value
+        console.log('Set rotation', uid)
+        window.ovrt.setWinRotation(uid, {
+          x: 1,
+          y: 1,
+          z: 1
+        })
+      }
+
+      function setSetting () {
+        let uid = document.getElementById('uid').value
+        console.log('Set setting', uid)
+        ovrt.setWinSetting(uid, ovrt.winSettings.curvature, 1.0)
+      }
+
       window.ovrt.onWinOpened = function (uid) {
         console.log('Captured window open', uid)
+        document.getElementById("uid").value = uid
       }
 
       window.ovrt.onWinClosed = function (uid) {

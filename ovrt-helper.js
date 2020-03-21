@@ -1,13 +1,7 @@
-/**
- * For whatever reason now this callback is working. I was thinking it wouldn't if the helper-test overrode
- * the onWindowOpened funciton, but that doesn't seem to be the case. One way to permafix it is to just
- * use the onWindowOpened function as the method to call completeWindowSpawn and then have completeWindowSpawn call onWindowOpened
- */
-
 window.ovrtWinSpawned = function (uid) { window.ovrt.completeWinSpawn(uid) }
 window.ovrtWinDetailed = function (details) { window.ovrt.completeWinDetails(details) }
 window.ovrtWinTitles = function (titles) { console.log('Got titles proper'); window.ovrt.completeWindowTitles(titles) }
-function ovrtMonitorTotal (total) { window.ovrt.totalMonitors = total }
+window.ovrtMonitorTotal = function (total) { window.ovrt.totalMonitors = total }
 
 let titleTimeout = -1
 let titleTimeoutInterval = 5000

@@ -253,7 +253,7 @@ rot | Object | An object containing the properties x, y, and z
 ovrt.setWinSetting(uid, setting, value)
 ```
 
-Set the setting of a window to `value`. See the list of [OVR Tookit window settings](http://wiki.ovrtoolkit.co.uk/index.php?title=CustomApps#Settings).
+Set the setting of a window to `value`. See [`ovrt.winSettings`](#window-settings) or the list of [OVR Tookit window settings](http://wiki.ovrtoolkit.co.uk/index.php?title=CustomApps#Settings).
 
 Argument | Type | Description
 -------- | ---- | -----------

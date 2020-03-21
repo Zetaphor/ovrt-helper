@@ -3,6 +3,10 @@ body {
   color: black;
 }
 
+button {
+  margin: 3px;
+}
+
 #logOutput {
   margin-bottom: 10px;
   max-height: 200px;

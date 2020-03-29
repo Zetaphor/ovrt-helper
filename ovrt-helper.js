@@ -367,7 +367,7 @@ window.ovrt = {
       }
       message = message.substring(0, message.length - 2)
       let today = new Date()
-      let time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}:${today.getMilliseconds()}`
+      let time = `${today.getHours()}:${today.getMinutes().toString().padStart(2, "0")}:${today.getSeconds().toString().padStart(2, "0")}.${today.getMilliseconds().toString().padStart(3, "0")}`
       window.ovrt.addLogLine(`<p class="console-item log-item"><span class="timestamp">${time}</span> <span class="prefix">[LOG]</span>&nbsp;<span class="message">${message}</span></p>`)
       window.ovrt.onLog(message)
     }
@@ -375,7 +375,7 @@ window.ovrt = {
 
   logError: function (errorMsg, url, lineNumber) {
     let today = new Date()
-    let time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}:${today.getMilliseconds()}`
+    let time = `${today.getHours()}:${today.getMinutes().toString().padStart(2, "0")}:${today.getSeconds().toString().padStart(2, "0")}.${today.getMilliseconds().toString().padStart(3, "0")}`
     window.ovrt.addLogLine(`<p class="error-item log-item"><span class="timestamp">${time}</span> <span class="prefix">[ERROR]</span> <span class="message">${errorMsg}</span> - <span class="lineNumber">L${lineNumber}</span> - <span class="url">${url}</span></p>`)
     window.ovrt.onLogError({
       message: errorMsg,
